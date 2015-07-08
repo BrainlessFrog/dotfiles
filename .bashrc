@@ -138,10 +138,13 @@ alias puptot='sudo apt-get update && sudo apt-get upgrade'
 alias premove='sudo apt-get remove'
 alias paremove='sudo apt-get autoremove'
 
-# WPS Office
-alias wwriter='wps'
-alias wcalc='et'
-alias wpres='wpp'
+# Git aliases
+alias gadd='git add'
+alias gaa='git add .'
+alias gcom='git commit -m'
+alias gpull='git pull origin master'
+alias gpush='git push origin master'
+alias gupdate='git add . && git commit -m "Global update $(date +%F)" && git push origin master'
 
 # Other aliases
 alias pweb='ping -c 5 -i 3 195.238.2.21'

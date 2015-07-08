@@ -1,0 +1,76 @@
+# Settings:
+# =========
+
+# Window:
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_class conky_desktop
+alignment top_right
+gap_x 12
+gap_y 35
+
+# Fonts:
+use_xft yes
+override_utf8_locale yes
+uppercase no
+use_spacer left
+xftfont Droid Sans Mono:size=12
+xftalpha 1.0
+
+# Config:
+update_interval 0.5
+double_buffer yes
+text_buffer_size 2048
+
+# Colors:
+color1 FBB32E 
+color2 FFFFFF
+color3 473E35
+
+# Lua script:
+lua_load ~/.conky/laptop-rings.lua
+lua_draw_hook_pre ring_stats
+
+# Render:
+# =======
+
+TEXT
+#CPU
+${voffset 24}
+${color1}${offset 60}CPU
+${color2}${offset 40}${freq 0} MHz
+${color2}${offset 50}${hwmon 1 temp 2}°C
+#RAM
+${voffset -75}
+${color1}${offset 200}RAM
+${color1}${offset 210}&
+${color1}${offset 195}SWAP
+#HDD
+${voffset -75}
+${color1}${offset 320}HDD
+${color2}${offset 315}${execi 10 hddtemp -n /dev/sda}°C
+#Uptime and battery
+#Space ligne for Conky size
+                                        
+${voffset 20}
+${color1}${exec echo $USER}@$nodename $hr
+${color1}Kernel    : ${color2}$kernel
+${color1}Uptime    : ${color2}$uptime
+${color1}Time left : ${color2}$battery_time
+${color1}Governor  : ${color2}${execi 10 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
+
+#Process
+${color1}Processes : ${color2}$processes ${color1}${offset 20}Running : ${color2}$running_processes
+${color1}CPU : $hr
+${color1}Nom ${alignr 50}PID ${alignr 10}CPU%
+${color2}${top name 1} ${alignr 30}${top pid 1} ${alignr 10}${top cpu 1}
+${color3}${top name 2} ${alignr 30}${top pid 2} ${alignr 10}${top cpu 2}
+${color3}${top name 3} ${alignr 30}${top pid 3} ${alignr 10}${top cpu 3}
+${color2}${cpugraph}
+${color1}RAM : $hr
+${color1}Nom ${alignr 50}PID ${alignr 10}Mem%
+${color2}${top_mem name 1} ${alignr 30}${top_mem pid 1} ${alignr 10}${top_mem mem 1}
+${color3}${top_mem name 2} ${alignr 30}${top_mem pid 2} ${alignr 10}${top_mem mem 2}
+${color3}${top_mem name 3} ${alignr 30}${top_mem pid 3} ${alignr 10}${top_mem mem 3}
+${color2}${memgraph}

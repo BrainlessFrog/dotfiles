@@ -1,0 +1,39 @@
+#!/bin/bash
+# panel - By BrainlessFrog
+
+# Checking if the panel is already running
+if [[ "$(pgrep -cx panel)" -gt 1 ]]; then
+    echo "The panel is already running."
+    exit 1;
+fi
+
+# Checking for previous errors
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+# Sourcing colors:
+# Variable return the code without '#', use '#${Var}' or '#FF${Var}'
+. panel_colors
+
+# Panel variables:
+PANEL_FONT_ONE="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1"
+PANEL_FONT_ONE_PANGO="Terminus 12"
+PANEL_FONT_TWO="-misc-stlarch-medium-r-normal-*-10-*-*-*-c-*-iso10646-*"
+PANEL_HEIGHT="24"
+SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
+#PANEL_WIDTH=$((SCREEN_WIDTH-24))
+
+# Make dmenu use the same font and color
+sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "/home/$USER/.config/sxhkd/sxhkdrc-desktop"
+sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "/home/$USER/.config/sxhkd/sxhkdrc-laptop"
+pkill -USR1 -x sxhkd
+
+# Configuring bspwm
+bspc config top_padding "$PANEL_HEIGHT"
+
+# Calling Bar
+# Part after bar is required for clickable areas
+panel_bar | lemonbar -p -u "2" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_ONE" -f "$PANEL_FONT_TWO" -F "#FF${COLOR_FOREGROUND}" -B "#FF${COLOR_BACKGROUND_DARK}" | while read line; do eval "$line"; done &
+stalonetray -bg "#${COLOR_BACKGROUND_DARK}" --geometry "1x1+$((SCREEN_WIDTH-250))+2" > /dev/null 2>&1 &
+dunst -fn "$PANEL_FONT_ONE_PANGO" -lb "#${COLOR_BACKGROUND_DARK}" -nb "#${COLOR_BACKGROUND_DARK}" -cb "#${COLOR_BACKGROUND_DARK}" -lf "#${COLOR_FOREGROUND}" -nf "#${COLOR_FOREGROUND}" -cf "#${COLOR_FOREGROUND}" -to "10" -geometry "250"x"$((5*PANEL_HEIGHT))"-"0"+"$PANEL_HEIGHT" > /dev/null 2>&1 &
+
+wait

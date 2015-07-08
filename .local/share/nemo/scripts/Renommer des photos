@@ -1,0 +1,107 @@
+#!/bin/bash
+#Script nautilus de renommage des photos
+
+OLDIFS="$IFS"
+IFS="
+"
+
+ext() {
+    if [[ -n "$2" ]] && [[ -z "$3" ]]; then
+        local zoneCut=`echo $2 | sed -e "s#\.#\n#g" | wc -l`
+        local extension=`echo $2 | cut -d '.' -f $zoneCut`
+
+        if [[ "$extension" == "bak" ]] || [[ "$extension" == "old" ]] || [[ -z `echo $extension | sed -e "s#[0-9]##g"` ]]; then
+            zoneCut=$((zoneCut - 1))
+            extension=`echo $2 | cut -d '.' -f $zoneCut-`
+        elif [[ "$extension" == "gz" ]] || [[ $extension == bz* ]] || [[ $extension == "rar" ]]; then
+            zoneCut=$((zoneCut - 1))
+            local extensionBis=`echo $2 | cut -d '.' -f $zoneCut`
+
+            if [[ "$extensionBis" == "tar" ]] || [[ "$extensionBis" == part* ]];then
+                extension=`echo $2 | cut -d '.' -f $zoneCut-`
+            fi
+        elif [[ "$extension" == "xtm" ]]; then
+            zoneCut=$((zoneCut - 2))
+            extension=`echo $2 | cut -d '.' -f $zoneCut-`
+        fi
+
+        if [[ "$1" == "-e" ]]; then
+            echo $extension
+        elif [[ "$1" == "-p" ]]; then
+            echo ".$extension"
+        else
+            echo -e "Erreur : vous devez entrez '-e' ou '-p' comme premier paramètre.\next [paramètre] fichier\n'-e' pour l'extension et '-p' pour l'extension précédée d'un point"
+        fi
+    elif [[ -n "$3" ]]; then
+        echo "Erreur : trop d'arguments ! Veuillez n'entrer que deux arguments !"
+    else
+        echo -e "Erreur : vous devez entrer deux arguments !\next [paramètre] fichier\n'-e' pour l'extension et '-p' pour l'extension précédée d'un point"
+    fi
+}
+
+nombreFichiers=`echo -e "$NEMO_SCRIPT_SELECTED_FILE_PATHS" | wc -l`
+
+#Choix du format de renommage :
+format=`zenity --list --radiolist --title="Photos :" --text="Sélectionner le format de renommage :" \
+--column="Choix" --column="Numéros"  --column="Format" --column="Exemple" \
+TRUE 1 "Format photo" "DSC_0001" \
+FALSE 2 "Format image" "IMG_0001" \
+FALSE 3 "Format personnalisé" "Mes photos 0001" \
+--hide-column=2 --print-column=2`
+if [[ "$?" -ne 0 ]]; then
+    exit 1;
+fi
+
+#Nom du renommage :
+if [[ "$format" -eq 1 ]]; then
+    nomPhotos="DSC_"
+elif [[ "$format" -eq 2 ]]; then
+    nomPhotos="IMG_"
+elif [[ "$format" -eq 3 ]]; then
+    nomPhotos=`zenity --entry --title="Photos :" --text="Nom des photos :"`
+    nomPhotos="$nomPhotos "
+    if [[ "$?" -ne 0 ]]; then
+        exit 2;
+    fi
+fi
+
+#Numero à partir duquel renommer :
+ok="n"
+while [[ "$ok" == "n" ]]; do
+    numeroPhotos=`zenity --entry --title="Photos :" --text="Numéro à partir duquel renommer :"`
+    if [[ "$?" -ne 0 ]]; then
+        exit 3;
+    fi
+
+    if [[ -z `echo $numeroPhotos | sed -e "s#[0-9]##g"` ]]; then
+        nombreTotal=$((numeroPhotos+nombreFichiers-2)) #Enlève 2 car la liste ajoute 1, et l'addition aussi
+        if [[ "$nombreTotal" -gt 9999 ]]; then
+            zenity --error --title="Photos :" --text="Numéro trop grand ! Les photos dépassent les 10 000 !"
+        else
+            ok="o"
+        fi
+    else
+        zenity --error --title="Photos :" --text="Veuillez entrer un chiffre !"
+    fi
+done
+
+#Renommage :
+for fichier in $NEMO_SCRIPT_SELECTED_FILE_PATHS; do
+    extension=`ext -e "$fichier"`
+    
+    if [[ "$numeroPhotos" -lt 10 ]]; then
+        mv "$fichier" "${nomPhotos}000${numeroPhotos}.${extension}"
+    elif [[ "$numeroPhotos" -lt 100 ]]; then
+        mv "$fichier" "${nomPhotos}00${numeroPhotos}.${extension}"
+    elif [[ "$numeroPhotos" -lt 1000 ]]; then
+        mv "$fichier" "${nomPhotos}0${numeroPhotos}.${extension}"
+    else
+        mv "$fichier" "${nomPhotos}${numeroPhotos}.${extension}"
+    fi
+
+    numeroPhotos=$((numeroPhotos + 1))
+done
+
+IFS="$OLDIFS"
+
+exit 0;

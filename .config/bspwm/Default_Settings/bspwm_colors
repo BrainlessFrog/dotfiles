@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Default colors
+bspc config focused_border_color "#7E7F89"
+bspc config active_border_color "#545350"
+bspc config normal border_color "#3F3E3B"
+bspc config presel_border_color "#E8E8F4"
+bspc config focused_locked_border_color "#C7B579"
+bspc config active_locked_border_color "#545350"
+bspc config normal_locked_border_color "#3F3E3B"
+bspc config focused_sticky_border_color "#E3A5DA"
+bspc config active_sticky_border_color "#545350"
+bspc config normal_sticky_border_color "#3F3E3B"
+bspc config focused_private_border_color "#42CAD9"
+bspc config active_private_border_color "#5C5955"
+bspc config normal_private_border_color "#34322E"
+bspc config urgent_border_color "#EFA29A"

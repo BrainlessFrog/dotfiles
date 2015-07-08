@@ -1,0 +1,62 @@
+#Configuration
+#=============
+
+#Paramètres de fenêtre :
+#-----------------------
+own_window yes 
+own_window_type desktop
+own_window_transparent yes
+alignment top_right
+gap_x 25
+gap_y 45
+
+#Paramètres de police :
+#----------------------
+use_xft yes
+override_utf8_locale yes
+uppercase no
+use_spacer left
+
+#Paramètres de configuration :
+#-----------------------------
+update_interval 0.5
+double_buffer yes
+text_buffer_size 2048
+
+#Couleurs :
+#----------
+color1 00FF00 
+color2 FFFFFF
+color3 473E35
+
+#Contenu
+#=======
+
+TEXT
+${color1}Batterie $hr
+${color1}${offset 10}Etat de la batterie${offset 5}: ${color2}$battery
+${color1}${offset 10}Temps restant${offset 33}: ${color2}$battery_time
+${color1}${offset 10}Gouverneur${offset 53}: ${color2}${execi 10cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
+
+${color1}Utilisation des ressources $hr
+${color1}${offset 10}Nombre de processus : ${color2}$processes ${color1}${offset 20}En cours : ${color2}$running_processes
+${color1}${offset 10}CPU :
+${color1}${offset 15}Nom ${alignr 50}PID ${alignr 20}CPU%
+${color2}${offset 15}${top name 1} ${alignr 50}${top pid 1} ${alignr 20}${top cpu 1}
+${color3}${offset 15}${top name 2} ${alignr 50}${top pid 2} ${alignr 20}${top cpu 2}
+${color3}${offset 15}${top name 3} ${alignr 50}${top pid 3} ${alignr 20}${top cpu 3}
+
+${color1}${offset 10}RAM :
+${color1}${offset 15}Nom ${alignr 42}PID ${alignr 20}Mem%
+${color2}${offset 15}${top_mem name 1} ${alignr 50}${top_mem pid 1} ${alignr 20}${top_mem mem 1}
+${color3}${offset 15}${top_mem name 2} ${alignr 50}${top_mem pid 2} ${alignr 20}${top_mem mem 2}
+${color3}${offset 15}${top_mem name 3} ${alignr 50}${top_mem pid 3} ${alignr 20}${top_mem mem 3}
+
+#Pour MOC :
+#${if_running mocp}${color1}MusiqueOnConsole $hr
+#${color1}${offset 10}État${offset 25}: ${color2}$moc_state
+#${color1}${offset 10}Titre${offset 20}: ${color2}$moc_song
+#${color1}${offset 10}Artiste${offset 5}: ${color2}$moc_artist
+#${color1}${offset 10}Album${offset 6}: ${color2}$moc_album
+#${color1}${offset 10}Durée${offset 8}: ${color2}$moc_curtime / $moc_totaltime
+#$endif

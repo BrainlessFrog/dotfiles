@@ -1,0 +1,42 @@
+! Tomorrow (Base 16) Colorscheme
+! Dark / Bright
+
+! Black
+*color0:      #1D1F21
+*color8:      #969896
+
+! Red
+*color1:      #CC6666
+*color9:      #DE935F
+
+! Green
+*color2:      #B5BD68
+*color10:     #282A2E
+
+! Yellow
+*color3:      #F0C674
+*color11:     #373B41
+
+! Blue
+*color4:      #81A2BE
+*color12:     #B4B7B4
+
+! Magenta
+*color5:      #B294BB
+*color13:     #E0E0E0
+
+! Cyan
+*color6:      #8ABEB7
+*color14:     #A3685A
+
+! White
+*color7:      #C5C8C6
+*color15:     #FFFFFF
+
+! Default
+*background:  #1D1F21
+*foreground:  #C5C8C6
+*cursorColor: #C5C8C6
+
+! URxvt
+URxvt.background: [80]#1D1F21

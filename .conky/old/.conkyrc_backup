@@ -1,0 +1,88 @@
+#Configuration
+#=============
+
+#Paramètres de fenêtre :
+#-----------------------
+own_window yes 
+own_window_type desktop
+own_window_transparent yes
+alignment top_right
+gap_x 25
+gap_y 45
+
+#Paramètres de police :
+#----------------------
+use_xft yes
+override_utf8_locale yes
+uppercase no
+use_spacer left
+
+#Paramètres de configuration :
+#-----------------------------
+update_interval 0.5
+double_buffer yes
+text_buffer_size 2048
+
+#Couleurs :
+#----------
+color1 FC8820 
+color2 FFFFFF
+color3 473E35
+
+#Contenu
+#=======
+
+TEXT
+${color1}Bonjour ${color2}${exec echo $USER}${color1} !
+${color1}Nous sommes le ${color2}${time %A} ${time %d} ${time %B} ${time %Y}${color1}, et il est ${color2}${time %H:%M:%S}${color1}.
+${color1}L'ordinateur est démarré depuis ${color2}$uptime${color1}.
+
+${color1}Informations système $hr
+${color1}${offset 10}Nom de la machine${offset 5}: ${color2}$nodename
+${color1}${offset 10}Version du noyau${offset 22}: ${color2}$sysname $kernel - $machine
+
+#${color1}Carte graphique $hr
+#${color1}${offset 10}Fréquence du GPU${offset 63}: ${color2}${nvidia gpufreq} MHz
+#${color1}${offset 10}Fréquence de la mémoire${offset 5}: ${color2}${nvidia memfreq} MHz
+#${color1}${offset 10}Température${offset 106}: ${color2}${nvidia temp}°C
+
+${color1}Processeurs $hr
+${color1}${offset 10}Fréquence${offset 49}: ${color2}${freq 0} MHz
+${color1}${offset 10}Utilisation totale${offset 5}: ${color2}${cpu cpu0}% - ${color1}${cpubar cpu0}
+${color1}${offset 10}Cœur n°${color2}${alignr 140}CPU1${alignr 100}CPU2
+${color1}${offset 10}Utilisation${color2}${alignr 200}${cpu cpu1}%${alignr 140}${cpu cpu2}%
+${color1}${offset 10}Températures${color2}${alignr 138}${platform coretemp.0 temp 2}°C${alignr 98}${platform coretemp.0 temp 3}°C
+${color1}$cpugraph
+
+${color1}Disques $hr
+${color1}${offset 10}Température${offset 5}: ${color2}${hddtemp /dev/sda}°C
+${color1}${offset 10}Utilisation${offset 5}:
+${color1}${offset 15}Linux${offset 11}: ${color2}${fs_used /} / ${fs_size /} ${color1}${fs_bar /}
+${color1}${offset 15}Home${offset 5}: ${color2}${fs_used /home} / ${fs_size /home} ${color1}${fs_bar /home} 
+
+${color1}Mémoire $hr
+${color1}${offset 10}RAM${offset 12}: ${color2}$mem / $memmax ${color1}$membar
+${color1}${offset 10}Swap${offset 5}: ${color2}$swap / $swapmax ${color1}$swapbar
+
+${color1}Utilisation des ressources $hr
+${color1}${offset 10}Nombre de processus : ${color2}$processes ${color1}${offset 20}En cours : ${color2}$running_processes
+${color1}${offset 10}CPU :
+${color1}${offset 15}Nom ${alignr 50}PID ${alignr 20}CPU%
+${color2}${offset 15}${top name 1} ${alignr 50}${top pid 1} ${alignr 20}${top cpu 1}
+${color3}${offset 15}${top name 2} ${alignr 50}${top pid 2} ${alignr 20}${top cpu 2}
+${color3}${offset 15}${top name 3} ${alignr 50}${top pid 3} ${alignr 20}${top cpu 3}
+
+${color1}${offset 10}RAM :
+${color1}${offset 15}Nom ${alignr 42}PID ${alignr 20}Mem%
+${color2}${offset 15}${top_mem name 1} ${alignr 50}${top_mem pid 1} ${alignr 20}${top_mem mem 1}
+${color3}${offset 15}${top_mem name 2} ${alignr 50}${top_mem pid 2} ${alignr 20}${top_mem mem 2}
+${color3}${offset 15}${top_mem name 3} ${alignr 50}${top_mem pid 3} ${alignr 20}${top_mem mem 3}
+
+#Pour MOC :
+#----------
+#${if_running mocp}${color1}MusiqueOnConsole $hr
+#${color1}${offset 10}Titre${offset 20}: ${color2}$moc_song
+#${color1}${offset 10}Artiste${offset 5}: ${color2}$moc_artist
+#${color1}${offset 10}Album${offset 6}: ${color2}$moc_album
+#${color1}${offset 10}Durée${offset 8}: ${color2}$moc_curtime / $moc_totaltime
+#$endif

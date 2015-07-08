@@ -1,0 +1,55 @@
+#include "/home/kevin/.colors/tango.colors"
+!#include "/home/kevin/.colors/hybrid.colors"
+!#include "/home/kevin/.colors/smyck.colors"
+!#include "/home/kevin/.colors/jellybeans.colors"
+!#include "/home/kevin/.colors/z3bra.colors"
+!#include "/home/kevin/.colors/monokai.colors"
+!#include "/home/kevin/.colors/sweetlove.colors"
+!#include "/home/kevin/.colors/tomorrow.colors"
+!#include "/home/kevin/.colors/WallpaperGenerated.colors"
+
+! URxvt Configuration
+! -------------------
+! Size and font
+!URxvt.geometry: 74x24
+URxvt.geometry: 80x20
+!URxvt.font: xft:DejaVu Sans Mono:pixelsize=13:antialias=true,-*-stlarch-*-r-normal-*-10-*-*-*-*-*-*-*
+URxvt.font: xft:DejaVu Sans Mono for Powerline:pixelsize=13:antialias=true,-*-stlarch-*-r-normal-*-10-*-*-*-*-*-*-*
+!URxvt.font: -*-gohufont-medium-r-normal-*-14-*-*-*-*-*-iso10646-*,-*-stlarch-*-r-normal-*-10-*-*-*-*-*-*-*
+!URxvt.font: -*-terminesspowerline-medium-r-*-*-14-*-*-*-*-*-iso10646-*,-*-stlarch-*-r-normal-*-10-*-*-*-*-*-*-*
+!URxvt.font: -*-terminesspowerline-medium-r-*-*-12-*-*-*-*-*-iso10646-*,-*-stlarch-*-r-normal-*-10-*-*-*-*-*-*-*
+!URxvt.letterSpace: -1
+
+! Borders
+URxvt.internalBorder: 1
+URxvt.externalBorder: 1
+!URxvt.borderColor: #FFFFFF
+
+! Scrollbar and history
+URxvt.saveLines: 10000
+URxvt.scrollBar: false
+!URxvt.scrollBar_right: true
+!URxvt.scrollColor: #FFFFFF
+!URxvt.scrollBar_floating: true
+!URxvt.scrollstyle: plain
+
+! Termname
+!URxvt.termName: xterm
+URxvt.termName: xterm-256color
+!URxvt.termName: screen-256color
+
+! Background transparency
+URxvt.depth: 32
+
+! Colored Man pages
+URxvt.colorIT: #EF2929
+URxvt.colorBD: #8AE234
+URxvt.colorUL: #729FCF
+!URxvt.colorIT: #87AF5F
+!URxvt.colorBD: #D7D7D7
+!URxvt.colorUL: #87AFD7
+
+! Clickable URL
+URxvt.perl-ext-common: default,matcher
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 1

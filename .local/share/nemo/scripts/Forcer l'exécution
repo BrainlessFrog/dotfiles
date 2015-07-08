@@ -1,0 +1,22 @@
+#!/bin/bash
+# Executer des scripts qui ne peuvent pas etre 'chmod +x' (ex.: sur l'O2Media)
+
+OLDIFS="$IFS"
+IFS="
+"
+
+getShell() {
+    local fileName="$1"
+    local fileShell=`cat "$fileName" | head -n 1 | sed 's%^..%%g'`
+
+    echo "$fileShell"
+}
+
+for fichier in $NEMO_SCRIPT_SELECTED_FILE_PATHS; do
+    shellFichier=`getShell "$fichier"`
+    $shellFichier "$fichier"
+done
+
+IFS="$OLDIFS"
+
+exit 0;

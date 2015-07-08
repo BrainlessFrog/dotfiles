@@ -1,0 +1,22 @@
+# Get the system version:
+version=`lsb_release -c | cut -c 11-`
+
+# Check if a file is empty
+if [ `wc -m 'fichier' | cut -d ' ' -f 1` -eq 0 ]
+OR
+if test -s 'fichier' (pas vide)
+-ne: not empty
+
+# Run a sudo command later in the script:
+read -p 'Password: ' pass
+echo $pass | sudo -S commande
+
+# Save files in a tar.gz file:
+tar -cvzf archive.tar.gz --exclude=LesDossiersEtOuFichiersÀExclures DossierÀSauvegarderIci/home -g FichierDeSauvegardePourLIncrémentation
+
+# Check if the variable is a number:
+if [ -z `echo $var | sed -e "s#[0-9]##g"` ]
+
+# Get Hex code of a unicode character (Base 16) to then convert it in Octal (Base 8)
+echo -e "\uXXXX" | hexdump -C | head -n 1 | cut -d ' ' -f 3-5
+echo "obase=8; ibase=16; XX" | bc # Letters in Capital

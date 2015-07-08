@@ -1,0 +1,67 @@
+#Configuration
+#=============
+
+#Paramètres de fenêtre :
+#-----------------------
+own_window yes 
+own_window_type desktop
+own_window_transparent yes
+alignment top_left
+gap_x 25
+gap_y 45
+
+#Paramètres de police :
+#----------------------
+use_xft yes
+override_utf8_locale yes
+uppercase no
+use_spacer left
+
+#Paramètres de configuration :
+#-----------------------------
+update_interval 0.5
+double_buffer yes
+text_buffer_size 2048
+
+#Couleurs :
+#----------
+color1 00FF00 
+color2 FFFFFF
+color3 473E35
+
+#Contenu
+#=======
+
+TEXT
+${color1}Bonjour ${color2}${exec echo $USER}${color1} !
+${color1}Nous sommes le ${color2}${time %A} ${time %d} ${time %B} ${time %Y}${color1}, et il est ${color2}${time %H:%M:%S}${color1}.
+${color1}L'ordinateur est démarré depuis ${color2}$uptime${color1}.
+
+${color1}Informations système $hr
+${color1}${offset 10}Nom de la machine${offset 5}: ${color2}$nodename
+${color1}${offset 10}Version du noyau${offset 22}: ${color2}$sysname $kernel - $machine
+
+#${color1}Carte graphique $hr
+#${color1}${offset 10}Fréquence du GPU${offset 63}: ${color2}${nvidia gpufreq} MHz
+#${color1}${offset 10}Fréquence de la mémoire${offset 5}: ${color2}${nvidia memfreq} MHz
+#${color1}${offset 10}Température${offset 106}: ${color2}${nvidia temp}°C
+${color1}Carte graphique $hr
+${color1}${offset 10}Température${offset 5}: ${color2}${hwmon 0 temp 1}°C
+
+${color1}Processeurs $hr
+${color1}${offset 10}Fréquence${offset 49}: ${color2}${freq 0} MHz
+${color1}${offset 10}Utilisation totale${offset 5}: ${color2}${cpu cpu0}% - ${color1}${cpubar cpu0}
+${color1}${offset 10}Cœur n°${offset 68}: ${color2}${offset 54}CPU1${offset 99}CPU2
+${color1}${offset 10}Utilisation${offset 57}: ${color2}${offset 57}${cpu cpu1}%${offset 109}${cpu cpu2}%
+${color1}${offset 10}Températures${offset 21}: ${color2}${offset 50}${hwmon 1 temp 2}°C${offset 100}${hwmon 1 temp 3}°C
+${color1}$cpugraph
+
+${color1}Disques $hr
+${color1}${offset 10}Température${offset 5}: ${color2}${execi 10 hddtemp -n /dev/sda}°C
+${color1}${offset 10}Utilisation${offset 5}:
+${color1}${offset 15}Linux${offset 11}: ${color2}${fs_used /} / ${fs_size /} ${color1}${fs_bar /}
+${color1}${offset 15}Home${offset 5}: ${color2}${fs_used /home} / ${fs_size /home} ${color1}${fs_bar /home} 
+
+${color1}Mémoire $hr
+${color1}${offset 10}RAM${offset 12}: ${color2}$mem / $memmax ${color1}$membar
+${color1}${offset 10}Swap${offset 5}: ${color2}$swap / $swapmax ${color1}$swapbar

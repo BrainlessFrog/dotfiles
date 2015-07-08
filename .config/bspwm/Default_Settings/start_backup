@@ -1,0 +1,22 @@
+#!/bin/bash
+gnome-settings-daemon &
+#xset m 0 10 &
+#lxappearence &
+gnome-screensaver & #Only work with gnome-settings-daemon
+#xscreensaver -nosplash &
+nitrogen --restore &
+# Disable Nautilus desktop.
+gconftool-2 -s -t bool /apps/nemo/preferences/show_desktop false &
+# Do not let Nautilus set the background image.
+gconftool-2 -s -t bool /desktop/gnome/background/draw_background false &
+#xcompmgr &
+#tint2 &
+#avant-window-navigator &
+#nm-applet &
+#sh -c 'sleep 1 && conky -c .conkyrc' &
+#sh -c 'sleep 1 && conky -c .conkyFrc' &
+sh -c 'sleep 1 && conky -c .conkyrc_next' &
+#glippy &
+glipper &
+#update-notifier --force-use-gksu &
+#gnome-terminal --command=tmux &

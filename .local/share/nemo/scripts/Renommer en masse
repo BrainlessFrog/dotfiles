@@ -1,0 +1,57 @@
+#!/bin/bash
+#Script nautilus de renommage en masse
+
+OLDIFS="$IFS"
+IFS="
+"
+
+ext() {
+    if [[ -n "$2" ]] && [[ -z "$3" ]]; then
+        local zoneCut=`echo $2 | sed -e "s#\.#\n#g" | wc -l`
+        local extension=`echo $2 | cut -d '.' -f $zoneCut`
+
+        if [[ "$extension" == "bak" ]] || [[ "$extension" == "old" ]] || [[ -z `echo $extension | sed -e "s#[0-9]##g"` ]]; then
+            zoneCut=$((zoneCut - 1))
+            extension=`echo $2 | cut -d '.' -f $zoneCut-`
+        elif [[ "$extension" == "gz" ]] || [[ $extension == bz* ]] || [[ $extension == "rar" ]]; then
+            zoneCut=$((zoneCut - 1))
+            local extensionBis=`echo $2 | cut -d '.' -f $zoneCut`
+
+            if [[ "$extensionBis" == "tar" ]] || [[ "$extensionBis" == part* ]];then
+                extension=`echo $2 | cut -d '.' -f $zoneCut-`
+            fi
+        elif [[ "$extension" == "xtm" ]]; then
+            zoneCut=$((zoneCut - 2))
+            extension=`echo $2 | cut -d '.' -f $zoneCut-`
+        fi
+
+        if [[ "$1" == "-e" ]]; then
+            echo $extension
+        elif [[ "$1" == "-p" ]]; then
+            echo ".$extension"
+        else
+            echo -e "Erreur : vous devez entrez '-e' ou '-p' comme premier paramètre.\next [paramètre] fichier\n'-e' pour l'extension et '-p' pour l'extension précédée d'un point"
+        fi
+    elif [[ -n "$3" ]]; then
+        echo "Erreur : trop d'arguments ! Veuillez n'entrer que deux arguments !"
+    else
+        echo -e "Erreur : vous devez entrer deux arguments !\next [paramètre] fichier\n'-e' pour l'extension et '-p' pour l'extension précédée d'un point"
+    fi
+}
+
+nouveauNom=`zenity --entry --title="Nouveau nom :" --text="Comment voulez-vous renommez ce(s) fichier(s) ? "`
+if [[ "$?" -ne 0 ]]; then
+    exit 1;
+fi
+
+i="0"
+for fichier in $NEMO_SCRIPT_SELECTED_FILE_PATHS; do
+    i=$((i + 1))
+    extension=`ext -e "$fichier"`
+
+    mv "$fichier" "${nouveauNom} (${i}).${extension}"
+done
+
+IFS=$OLDIFS
+
+exit 0;

@@ -1,0 +1,28 @@
+Default :
+\u2022 = Default Circle
+Stlarch (small -> big) :
+Arch = \uE0A1 - \uE00E
+Pacman = \uE0A0 - \uE14D - \uE00F
+Ghost (small eyes) = \uE0C7 - \uE0C8
+Ghost (big eyes) = \uE0C6 \uE0AA
+Invader = \uE19D
+Full circle = \uE190 - \uE098 (Not centered) - \uE056
+Void circle = \uE0F6 (Not centered) - \uE0E6
+Full square = \uE099 (Not centered) - \uE000 - \uE057
+Void square = \uE0F7 (Not centered) - \uE130 - \uE0E7 
+Full diamond = \uE105 (Not centered) - \uE104
+Clock circle = \uE0A3 \uE015
+Lightning = \uE09E \uE040
+Powersupply = \uE041
+Battery 0 = \uE113 - \uE084 - \uE038
+Battery 1 = \uE114 - \uE085 - \uE039
+Battery 2 = \uE115 - \uE086 - \uE03A
+Battery 3 = \uE116 - \uE03B
+Network 2 bars = \uE0F1 - \uE0EE - \uE047 (Big)
+Network 3 bars = \uE0F2 - \uE0EF - \uE048 (Big)
+Network 4 bars = \uE0F3 - \uE0F0
+Volume Mute = \uE052 - \uE04F
+Volume 0 bars = \uE051 - \uE04E (Not working)
+Volume 1 bars = \uE053 - \uE050
+Volume 2 bars = \uE152 - \uE05D
+Musique = \uE0FE - \uE05C

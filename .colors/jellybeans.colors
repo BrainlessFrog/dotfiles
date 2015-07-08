@@ -1,0 +1,42 @@
+! Jellybeans Colorscheme
+! Dark / Bright
+
+! Black
+*color0:      #3B3B3B
+*color8:      #3B3B3B
+
+! Red
+*color1:      #CF6A4C
+*color9:      #CF6A4C
+
+! Green
+*color2:      #99AD6A
+*color10:     #99AD6A
+
+! Yellow
+*color3:      #D8AD4C
+*color11:     #D8AD4C
+
+! Blue
+*color4:      #597B5C
+*color12:     #597B5C
+
+! Magenta
+*color5:      #A037B0
+*color13:     #A037B0
+
+! Cyan
+*color6:      #71B9F8
+*color14:     #71B9F8
+
+! White
+*color7:      #ADADAD
+*color15:     #ADADAD
+
+! Default
+*background:  #000000
+*foreground:  #ADADAD
+*cursorColor: #ADADAD
+
+! URxvt
+URxvt.background: [80]#000000

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+[[ -f "$HOME/.Xdefaults" ]] && XFILE="$HOME/.Xdefaults" || XFILE="$HOME/.Xresources"
+TERM="urxvt"
+
+COLS="$(cat $XFILE | grep -Ei $TERM[\.\*]color[01-9] | sort -n -tr -k2 | cut -d: -f2 | tr -d [:blank:])"
+
+#echo -e "\n"
+
+for i in {0..7}; do
+    echo -en "\e[0;3${i}m ▉▉ $(echo "$COLS" | sed -n $(($i+1))'p')\e[0m"
+done
+
+echo
+
+for i in {0..7}; do
+    echo -en "\e[0;9${i}m ▉▉ $(echo "$COLS" | sed -n $(($i+9))'p')\e[0m"
+done
+
+echo -e "\n"

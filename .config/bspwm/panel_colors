@@ -1,0 +1,32 @@
+#!/bin/bash
+# panel_colors - By BrainlessFrog
+
+# Command from wich extract the color scheme:
+#COLOR_COMMAND="cat .Xdefaults"
+#COLOR_COMMAND="cat .Xresources"
+COLOR_COMMAND="xrdb -query -all"
+
+# Extracting color scheme from Xresources:
+COLOR_TERM_BLACK_DARK=`$COLOR_COMMAND | grep "color0:" | cut -d '#' -f 2`
+COLOR_TERM_BLACK_BRIGHT=`$COLOR_COMMAND | grep "color8:" | cut -d '#' -f 2`
+COLOR_TERM_RED_DARK=`$COLOR_COMMAND | grep "color1:" | cut -d '#' -f 2`
+COLOR_TERM_RED_BRIGHT=`$COLOR_COMMAND | grep "color9:" | cut -d '#' -f 2`
+COLOR_TERM_GREEN_DARK=`$COLOR_COMMAND | grep "color2:" | cut -d '#' -f 2`
+COLOR_TERM_GREEN_BRIGHT=`$COLOR_COMMAND | grep "color10:" | cut -d '#' -f 2`
+COLOR_TERM_YELLOW_DARK=`$COLOR_COMMAND | grep "color3:" | cut -d '#' -f 2`
+COLOR_TERM_YELLOW_BRIGHT=`$COLOR_COMMAND | grep "color11:" | cut -d '#' -f 2`
+COLOR_TERM_BLUE_DARK=`$COLOR_COMMAND | grep "color4:" | cut -d '#' -f 2`
+COLOR_TERM_BLUE_BRIGHT=`$COLOR_COMMAND | grep "color12:" | cut -d '#' -f 2`
+COLOR_TERM_MAGENTA_DARK=`$COLOR_COMMAND | grep "color5:" | cut -d '#' -f 2`
+COLOR_TERM_MAGENTA_BRIGHT=`$COLOR_COMMAND | grep "color13:" | cut -d '#' -f 2`
+COLOR_TERM_CYAN_DARK=`$COLOR_COMMAND | grep "color6:" | cut -d '#' -f 2`
+COLOR_TERM_CYAN_BRIGHT=`$COLOR_COMMAND | grep "color14:" | cut -d '#' -f 2`
+COLOR_TERM_WHITE_DARK=`$COLOR_COMMAND | grep "color7:" | cut -d '#' -f 2`
+COLOR_TERM_WHITE_BRIGHT=`$COLOR_COMMAND | grep "color15:" | cut -d '#' -f 2`
+COLOR_TERM_BACKGROUND=`$COLOR_COMMAND | grep "background:" | head -n 1 | cut -d '#' -f 2`
+COLOR_TERM_FOREGROUND=`$COLOR_COMMAND | grep "foreground:" | cut -d '#' -f 2`
+
+# Defining other colors:
+COLOR_BACKGROUND_DARK="272727"
+COLOR_BACKGROUND_BRIGHT="34322E"
+COLOR_FOREGROUND="A3A6AB"

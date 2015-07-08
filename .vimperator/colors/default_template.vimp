@@ -1,0 +1,124 @@
+" ==Vimperator_Color_Scheme==
+" Vimperator Color Scheme made to easily match any GTK theme
+" Based on the default color scheme, only replace background and foreground colors
+" By BrainlessFrog
+
+" Search and replace the color code to adapt the theme to your needs
+" GTK Theme : FlatStudioDark
+" Background Dark   : #2C2E2F
+" Background Bright : #383A3B
+" Foreground Dark   : #DCDCDC
+" Foreground Bright : #BDBDBD
+
+" Reset all styles first
+highlight clear
+
+" Categories with modified colors
+
+" Categories kept default
+
+highlight Bell                             border: none; background-color: black;
+highlight Boolean                          color: red;
+highlight CmdLine                          background: white; color: black; transition: all 0.25s;
+highlight CmdLine>*                        font-family: monospace;
+highlight CmdOutput                        white-space: pre;
+highlight CompDesc                         width: 500px; max-width: 500px; color: gray;
+highlight CompGroup
+highlight CompGroup:not(:first-of-type)    margin-top: 1ex;
+highlight CompIcon                         width: 16px; min-width: 16px; display: inline-block; margin-right: .5ex;
+highlight CompIcon>img                     max-width: 16px; max-height: 16px; vertical-align: middle;
+highlight CompItem
+highlight CompItem[selected]               background: #FFEC8B; box-shadow: 0px 0px 1px #CC0;
+highlight CompItem>*                       height: 18px; min-height: 18px; padding: 0 0.5ex;
+highlight CompMsg                          font-style: italic; margin-left: 16px;
+highlight CompResult                       width: 500px; max-width: 500px; overflow: hidden;
+highlight CompTitle                        font-weight: bold; background: linear-gradient(to top, #DBDBDB 19%, #D9D9D9, #E7E7E7 100%);
+highlight CompTitle>*                      color: #333; border-top: 1px solid gray; border-bottom: 1px solid #BBB; padding: 1px 0.5ex; text-shadow: 1px 1px 0px #E0E0E0;
+highlight ContentSeparator                 border-top: 1px dotted gray; display: -moz-box;
+highlight Disabled                         color: red;
+highlight Enabled                          color: green;
+highlight ErrorMsg                         color: white; background: red; font-weight: bold;
+highlight Filter                           border-radius: 2px; background: #FFEC8B; border: 1px solid orange;
+highlight FrameIndicator                   background-color: red; opacity: 0.5; z-index: 999; position: fixed; top: 0; bottom: 0; left: 0; right: 0;
+highlight Function                         color: navy;
+highlight Help                             font-size: 8pt; line-height: 1.4em; font-family: -moz-fixed;
+highlight HelpArg                          color: #6A97D4;
+highlight HelpBody                         display: block; margin: 1em auto; max-width: 100ex;
+highlight HelpBorder                       border-color: silver; border-width: 0px; border-style: solid;
+highlight HelpCode                         display: block; white-space: pre; margin-left: 2em; font-family: Terminus, Fixed, monospace;
+highlight HelpDefault                      margin-right: 1ex; white-space: pre;
+highlight HelpDescription                  display: block;
+highlight HelpEm                           font-weight: bold; font-style: normal;
+highlight HelpEx                           display: inline-block; color: #527BBD; font-weight: bold;
+highlight HelpExample                      display: block; margin: 1em 0;
+highlight HelpExample::before              content: "Example: "; font-weight: bold;
+highlight HelpHead                         display: block; margin: 1em 0; padding-bottom: .2ex; border-bottom-width: 1px; font-size: 2em; font-weight: bold; color: #527BBD; clear: both;
+highlight HelpInfo                         display: block; width: 20em; margin-left: auto;
+highlight HelpInfoLabel                    display: inline-block; width: 6em; color: magenta; font-weight: bold; vertical-align: text-top;
+highlight HelpInfoValue                    display: inline-block; width: 14em; text-decoration: none; vertical-align: text-top;
+highlight HelpItem                         display: block; margin: 1em 1em 1em 10em; clear: both;
+highlight HelpKey                          color: #102663;
+highlight HelpLink                         text-decoration: none;
+highlight HelpLink[href]:hover             text-decoration: underline;
+highlight HelpList                         display: block; list-style: outside disc;
+highlight HelpListItem                     display: list-item;
+highlight HelpNote                         color: red; font-weight: bold;
+highlight HelpOpt                          color: #106326;
+highlight HelpOptInfo                      display: inline-block; margin-bottom: 1ex;
+highlight HelpOptionalArg                  color: #6A97D4;
+highlight HelpOrderedList                  display: block; list-style: outside decimal;
+highlight HelpParagraph                    display: block; margin: 1em 0em;
+highlight HelpParagraph:first-child        margin-top: 0;
+highlight HelpSpec                         display: block; margin-left: -10em; float: left; clear: left; color: #FF00FF;
+highlight HelpString                       display: inline-block; color: green; font-weight: normal; vertical-align: text-top;
+highlight HelpString::after                content: '"';
+highlight HelpString::before               content: '"';
+highlight HelpSubhead                      display: block; margin: 1em 0; padding-bottom: .2ex; border-bottom-width: 1px; font-size: 1.2em; font-weight: bold; color: #527BBD; clear: both;
+highlight HelpSubsubhead                   display: block; margin: 1em 0; padding-bottom: .2ex; font-size: 1.1em; font-weight: bold; color: #527BBD; clear: both;
+highlight HelpTab                          display: table; width: 100%; margin: 1em 0; border-bottom-width: 1px; border-top-width: 1px; padding: .5ex 0; table-layout: fixed;
+highlight HelpTabColumn                    display: table-column;
+highlight HelpTabColumn:first-child        width: 25%;
+highlight HelpTabDescription               display: table-cell; padding: .1ex 1ex; border-width: 0px;
+highlight HelpTabRow                       display: table-row;
+highlight HelpTabTitle                     display: table-cell; padding: .1ex 1ex; font-weight: bold;
+highlight HelpTag                          display: inline-block; color: #999; margin-left: 1ex; font-size: 8pt; font-weight: bold;
+highlight HelpTags                         display: block; float: right; clear: right;
+highlight HelpTOC
+highlight HelpTOC>ol\ ol                   margin-left: -1em;
+highlight HelpTopic                        color: #102663;
+highlight HelpType                         margin-right: 2ex;
+highlight HelpWarning                      color: red; font-weight: bold;
+highlight Hint                             font-family: monospace; font-size: 10px; font-weight: bold; text-transform: uppercase; color: white; background-color: red; border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 1px 0px 1px;
+highlight Hint::after                      content: attr(number);
+highlight HintActive                       background-color: #88FF00; color: black;
+highlight HintElem                         background-color: yellow; color: black;
+highlight HintImage                        opacity: .5;
+highlight Indicator                        color: blue;
+highlight InfoMsg                          color: magenta; background: white;
+highlight Key                              font-weight: bold;
+highlight Keyword                          color: red;
+highlight LineNr                           color: orange; background: white;
+highlight Logo
+highlight Mapping                          color: magenta;
+highlight Message                          white-space: normal; min-width: 100%; padding-left: 2em; text-index: -2em; display: block;
+highlight ModeMsg                          color: white; background: green; border-radius: 1px; padding: 0px 5px;
+highlight MoreMsg                          color: green; background: white;
+highlight NonText                          color: blue; min-height: 16px; padding-left: 2px;
+highlight Normal                           color: black; background: white;
+highlight Null                             color: blue;
+highlight Number                           color: blue;
+highlight Object                           color: maroon;
+highlight Preview                          color: gray;
+highlight Prompt                           background: url("chrome://liberator/skin/prompt.png"); width: 10px; background-position: center; background-repeat: no-repeat;
+highlight PromptText                       color: white; background: purple;
+highlight Question                         color: green; background: white; font-weight: bold;
+highlight StatusLine                       color: gray; background: transparent; font-weight: normal;
+highlight String                           color: green;
+highlight TabNumber                        font-weight: bold; margin: 0px; padding-right: .3ex;
+highlight Tag                              color: blue;
+highlight Title                            color: magenta; background: white; font-weight: bold;
+highlight URL                              text-decoration: none; color: green;
+highlight URL:hover                        text-decoration: underline; cursor: pointer;
+highlight WarningMsg                       color: red; background: white;
+
+" vim:set filetype=vim:

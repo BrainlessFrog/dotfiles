@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Determine on which computer bspwm is running
+# According to hostname: $USER-desktop or $USER-laptop
+[[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
+
+runDesktop() {
+    ./.scripts/disableAccel.sh &
+    conky -c .conkyrc_desktop &
+}
+
+runLaptop() {
+    ./.scripts/setSynclient.sh &
+    conky -c .conkyrc_laptop &
+}
+
+# Config
+bspc config border_width          2
+bspc config window_gap            12
+bspc config split_ratio           0.50
+bspc config borderless_monocle    true
+bspc config gapless_monocle       true
+bspc config focus_by_distance     true
+#bspc config pointer_follows_focus true
+bspc config focus_follows_pointer true
+bspc config initial_polarity      second_child
+bspc config center_pseudo_tiled   true
+bspc config auto_cancel           true
+#bspc config auto_alternate        true
+#bspc config ignore_ewmh_focus     true
+
+# Monitor
+bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+# Rules
+bspc config external_rules_command /home/kevin/.config/bspwm/external_rules
+# Desktops
+bspc rule -a Steam desktop=^6
+bspc rule -a jd-Main desktop=^7 pseudo_tiled=true
+bspc rule -a Gimp desktop=^9 floating=true
+# Floating
+bspc rule -a vlc floating=true center=true
+bspc rule -a file-roller floating=true center=true
+bspc rule -a nitrogen floating=true center=true
+bspc rule -a gcolor2 floating=true center=true
+bspc rule -a lxappearance floating=true center=true
+bspc rule -a nvidia-settings floating=true center=true
+bspc rule -a pavucontrol floating=true center=true
+
+# Autostart
+gsettings set org.nemo.desktop show-desktop-icons false &
+gsettings set org.cinnamon.desktop.default-applications.terminal exec urxvtc &
+#./.scripts/setSynclient.sh &
+xscreensaver -nosplash &
+nitrogen --restore &
+compton &
+$DESKTOP && runDesktop || runLaptop
+#conky -c .conkyrc_rings &
+./.config/bspwm/panel &
+glipper &
+# 'Launch' nemo a first time, so it will launch faster after
+nemo -n &

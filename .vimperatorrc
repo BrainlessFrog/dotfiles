@@ -1,0 +1,55 @@
+" Vimperatorrc
+
+" Colorscheme
+colorscheme flatstudiodark
+
+" Visual bell
+set visualbell
+
+" Search settings
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+noremap <F8> :nohlsearch <CR>
+
+" Enable Ctrl-A in insert mode
+inoremap <C-a> <Insert><C-a><Insert>
+nnoremap <C-a> <Insert><C-a><Insert>
+" noremap <C-a> <Insert><C-a><Insert>
+
+" Change number of scrolled lines with j and k
+noremap j 5j
+noremap k 5k
+
+" Use letters for hint mode
+set hintchars=hjklasdfgyuiopqwertnmzxcvb
+set hintmatching=contains
+
+" Max items
+set maxitems=20
+
+" Don't go into insert mode after loading
+set focuscontent
+
+" Search engine
+set defsearch=google
+set suggestengines=google
+
+" Completion
+" set complete=sbl
+set complete=slb
+
+" Popups
+set popups=tab
+
+" Editor
+set editor="urxvt -e vim"
+
+" uBlock without Navbar fix
+style -name ublock * #nav-bar * { visibility: visible; }
+
+" Firefox built-in options
+set! browser.showQuitWarning=true
+
+" vim: set ft=vimperator:

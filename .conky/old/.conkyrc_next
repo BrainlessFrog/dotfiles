@@ -1,0 +1,87 @@
+#Configuration
+#=============
+
+#Paramètres de fenêtre :
+#-----------------------
+own_window yes
+own_window_type desktop
+own_window_transparent yes
+own_window_class conky_desktop
+alignment middle_middle
+gap_x 25
+gap_y 45
+
+#Paramètres de police :
+#----------------------
+use_xft yes
+override_utf8_locale yes
+uppercase no
+use_spacer none
+xftfont Bariol Bold:size=12
+xftalpha 1.0
+
+#Paramètres de configuration :
+#-----------------------------
+update_interval 0.5
+double_buffer yes
+text_buffer_size 2048
+
+#Couleurs :
+#----------
+color1 FBB32E 
+color2 FFFFFF
+color3 473E35
+
+#Contenu
+#=======
+
+TEXT
+#Time
+${voffset 150}
+${font Exo 2.0, Semi Bold:size=150}${color2}${time %H:%M}${font}
+
+
+${font Streetwear:size=36}${offset 5}${color2}${time %A %d %B %Y}${font}
+#Temp
+
+${color1}HDD${offset 13}: ${color2}${execi 10 hddtemp -n /dev/sda}°C
+${color1}CPU1${offset 8}: ${color2}${hwmon 1 temp 2}°C
+${color1}CPU2${offset 5}: ${color2}${hwmon 1 temp 3}°C
+${color1}GPU${offset 13}: ${color2}${hwmon 0 temp 1}°C
+#HDD and RAM
+${voffset -85}
+${offset 100}${color1}Linux${offset 9}: ${color2}${fs_used /} / ${fs_size /}
+${offset 100}${color2}${fs_bar 5,150 /} ${fs_used_perc /}%
+${offset 100}${color1}Home${offset 5}: ${color2}${fs_used /home} / ${fs_size /home}
+${offset 100}${color2}${fs_bar 5,150 /home} ${fs_used_perc /home}%
+${offset 100}${color1}RAM${offset 13}: ${color2}$mem / $memmax 
+${offset 100}${color2}${membar 5,150} $memperc%
+${offset 100}${color1}Swap${offset 9}: ${color2}$swap / $swapmax
+${offset 100}${color2}${swapbar 5,150} $swapperc%
+#CPU
+${voffset -152}
+${offset 300}${color1}CPU
+${offset 300}${color1}Freq${offset 5}: ${color2}${freq 0} MHz
+${offset 300}${color1}Use${offset 9}: ${color2}${cpu cpu0}% (${cpu cpu1}% - ${cpu cpu2}%)
+${offset 300}${color2}${cpugraph 15,160}
+#Uptime and battery
+${voffset -300}
+${offset 520}${color1}${exec echo $USER}@$nodename
+${offset 520}${color1}Kernel${offset 23}: ${color2}$kernel
+${offset 520}${color1}Uptime${offset 18}: ${color2}$uptime
+${offset 520}${color1}Battery${offset 18}: ${color2}$battery
+${offset 520}${color1}Time left${offset 6}: ${color2}$battery_time
+${offset 520}${color1}Governor${offset 5}: ${color2}${execi 10 cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor}
+#Process
+${voffset 97}
+${offset 485}${color1}Processes : ${color2}$processes ${color1}${offset 20}Running : ${color2}$running_processes
+${offset 485}${color1}CPU :
+${offset 490}${color1}Nom ${alignr 40}PID ${alignr 10}CPU%
+${offset 490}${color2}${top name 1} ${alignr 40}${top pid 1} ${alignr 10}${top cpu 1}
+${offset 490}${color3}${top name 2} ${alignr 40}${top pid 2} ${alignr 10}${top cpu 2}
+${offset 490}${color3}${top name 3} ${alignr 40}${top pid 3} ${alignr 10}${top cpu 3}
+${offset 485}${color1}RAM :
+${offset 490}${color1}Nom ${alignr 32}PID ${alignr 20}Mem%
+${offset 490}${color2}${top_mem name 1} ${alignr 40}${top_mem pid 1} ${alignr 10}${top_mem cpu 1}
+${offset 490}${color3}${top_mem name 2} ${alignr 40}${top_mem pid 2} ${alignr 10}${top_mem cpu 2}
+${offset 490}${color3}${top_mem name 3} ${alignr 40}${top_mem pid 3} ${alignr 10}${top_mem cpu 3}

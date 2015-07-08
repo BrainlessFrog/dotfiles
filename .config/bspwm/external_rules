@@ -1,0 +1,111 @@
+#!/bin/bash
+
+windowID="$1"
+windowClass="$2"
+windowInstance="$3"
+logFile="$(dirname \"$0\")/er_log.txt"
+
+getDebug() {
+    local winID="$1"
+    local winClass="$2"
+    local winInstance="$3"
+    local winName=`xprop -id "$winID" | grep "_NET_WM_NAME" | cut -d '"' -f 2`
+    local winRole=`xprop -id "$winID" | grep "WM_WINDOW_ROLE" | cut -d '"' -f 2`
+    local debugFile="$4"
+
+    echo "ID:          $winID" >> $debugFile
+    echo "Class:       $winClass" >> $debugFile
+    echo "Instance:    $winInstance" >> $debugFile
+    echo "Name:        $winName" >> $debugFile
+    echo "Role:        $winRole" >> $debugFile
+    echo "" >> $debugFile
+}
+
+getWindowName() {
+    local winID="$1"
+    local winName=`xprop -id "$winID" | grep "_NET_WM_NAME" | cut -d '"' -f 2`
+
+    echo "$winName"
+}
+
+getWindowRole() {
+    local winID="$1"
+    local winRole=`xprop -id "$winID" | grep "WM_WINDOW_ROLE" | cut -d '"' -f 2`
+
+    echo "$winRole"
+}
+
+# Let the application some time to launch
+sleep 1;
+
+# Debugging
+#getDebug $windowID $windowClass $windowInstance $logFile
+
+# Rules
+case "$windowClass" in
+    "Firefox")
+        windowName=`getWindowName "$windowID"`
+        windowRole=`getWindowRole "$windowID"`
+
+        echo "$windowName" | grep "priv" > /dev/null 2>&1 && PRIVATE=true || PRIVATE=false
+
+        if [[ "$windowRole" == "browser" ]]; then
+            $PRIVATE && echo "desktop=^2" || echo "desktop=^1"
+        else
+            echo ""
+        fi
+        ;;
+    "Thunderbird")
+        windowName=`getWindowName "$windowID"`
+        windowRole=`getWindowRole "$windowID"`
+        desktopNumber="^3"
+        
+        if [[ -n "$windowRole" ]]; then
+            if [[ "$windowRole" == "3pane" ]]; then
+                # Default window
+                echo "desktop=$desktopNumber"
+            elif [[ "$windowRole" =~ Msgc* ]]; then
+                # Message window
+                echo "desktop=$desktopNumber split_dir=down split_ratio=0.4"
+            elif [[ "$windowRole" =~ addr* ]]; then
+                # Contact window
+                echo "desktop=$desktopNumber split_dir=left split_ratio=0.3"
+            else
+                # Others
+                echo "desktop=$desktopNumber floating=true"
+            fi
+        else
+            # Others
+            echo "desktop=$desktopNumber floating=true"
+        fi
+        ;;
+    "Skype")
+        windowName=`getWindowName "$windowID"`
+        windowRole=`getWindowRole "$windowID"`
+        desktopNumber="^8"
+
+        if [[ -n "$windowRole" ]]; then
+            if [[ "$windowRole" =~ Conv* ]]; then
+                # Conversation window
+                echo "desktop=$desktopNumber split_dir=right split_ratio=0.2"
+            elif [[ "$windowRole" =~ Call* ]]; then
+                # Call window
+                echo "desktop=$desktopNumber split_dir=up split_ratio=0.4"
+            fi
+        else
+            if [[ "$windowName" =~ Opt* ]]; then
+                # Option window
+                echo "desktop=$desktopNumber floating=true"
+            elif [[ "$windowName" =~ Trans* ]]; then
+                # File transfert window
+                echo "desktop=$desktopNumber split_dir=down split_ratio=0.7"
+            else
+                # Default (contact) window
+                echo "desktop=$desktopNumber follow=false"
+            fi
+        fi
+        ;;
+    *)
+        echo ""
+        ;;
+esac

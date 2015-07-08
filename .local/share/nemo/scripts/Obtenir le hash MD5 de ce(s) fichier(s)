@@ -1,0 +1,9 @@
+#!/bin/bash
+#Obtention du Hash MD5 d'un ou de plusieurs fichiers avec MD5SUM et l'afficher avec Zenity
+#Trouvé à cette adresse :
+#http://www.agenux.org/Members/tapriuneclak/editer-le-menu-contextuel-de-nautilus
+
+result=`md5sum -b "$@"`
+zenity --info --text="Hash MD5:\n$result"
+
+exit 0;

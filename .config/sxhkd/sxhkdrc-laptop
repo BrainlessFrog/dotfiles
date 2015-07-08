@@ -1,0 +1,243 @@
+# bspwm Hotkeys :
+#======================================================================
+
+# Close/Kill window
+super + {_,shift + }w
+    bspc window -{c,k}
+alt + F4
+    bspc window -c
+
+# Toggle Monocle
+super + t
+    bspc desktop -l next
+
+# Balance/Reset (in size) the desktop
+super + {_,shift +}b
+    bspc desktop -{B,E}
+
+# Toggle Fullscreen
+super + f
+    bspc window -t fullscreen
+
+# Toggle Floating/Pseudo-tiled
+super + {_,shift + }s
+    bspc window -t {floating,pseudo_tiled}
+
+# Toggle Floating for newly created windows on the current desktop
+super + alt + s
+    bspc desktop -t floating
+
+# Toggle Private/Lock/Sticky
+super + {_,shift +}p
+    bspc window -t {private,locked}
+super + alt + p
+    bspc window -t sticky
+
+# Toggle last focused Window/Desktop back and forth
+super + {_,shift + }a
+    bspc {desktop,window} -f last
+
+# Select oldest/newest created window
+super + {o,n}
+    bspc control --record-history off; \
+    bspc window {older,newer} -f; \
+    bspc control --record-history on
+
+# Move selected window into the preselection
+super + y
+    bspc window -w last.manual
+
+# Swap selected window with the biggest/last window
+super + {_,shift +}m
+    bspc window -s {biggest,last}
+
+# Focus window to left/down/up/right
+super + {h,j,k,l}
+    bspc window -f {left,down,up,right}
+
+# Move window to left/right - down/up: for tiled windows, move into the preselection if there is one, else swap it
+super + shift + {h,l}
+    /home/kevin/.scripts/window_move.sh {-n,-p} -x -s 10
+super + shift + {j,k}
+    /home/kevin/.scripts/window_move.sh {-p,-n} -y -s 10
+
+# Resize current windows left/right - down/up
+super + alt + {h,l}
+    /home/kevin/.scripts/window_resize.sh {-n,-p} -x -s 10
+super + alt + {j,k}
+    /home/kevin/.scripts/window_resize.sh {-p,-n} -y -s 10
+
+# Circulate leaves of the tree Backward/Forward
+super + {_,shift + }c
+    bspc desktop -C {forward,backward}
+
+# Rotate leaves of the tree Backward/Forward
+super + {_,shift +}r
+    bspc desktop -R {90,270}
+
+# Move to Previous/Next desktop
+super + {Left,Right}
+    bspc desktop -f {prev,next}
+ctrl + alt + {Left,Right}
+    bspc desktop -f {prev,next}
+
+# Move window to Previous/Next desktop and keep focus
+super + shift + {Left,Right}
+    bspc window -d {prev,next} -f
+ctrl + alt + shift + {Left,Right}
+    bspc window -d {prev,next} -f
+
+# Move window to Previous/Next desktop without keeping focus
+super + alt + {Left,Right}
+    bspc window -d {prev,next}
+
+# Circulate between occupied desktops
+super + {_,shift +}Tab
+    bspc desktop -f {next,prev}.occupied
+
+# Circulate between local windows
+alt + {_,shift +}Tab
+    bspc window -f {next,prev}.local
+
+# Cut the window at left/down/up/right
+super + ctrl + {h,j,k,l}
+    bspc window -p {left,down,up,right}
+
+# Cancel one/all cut(s)
+super + {_,shift + }z
+    bspc {window -p cancel,desktop -c}
+
+# Focus the given desktop: adaptated for BE-azerty laptop
+super + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
+    bspc desktop -f ^{1-9,10}
+
+# Move a window to the given desktop and keep focus: adaptated for BE-azerty laptop
+super + {1-9,0}
+    bspc window -d ^{1-9,10} -f
+
+# Move a window to the given desktop without keeping focus: adaptated for BE-azerty laptop
+super + alt + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
+    bspc window -d ^{1-9,10}
+
+# Set window split ratio of the preselection: adapted for BE-azerty laptop
+super + ctrl + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla}
+    bspc window -r 0.{1-9}
+
+# Set window split ratio between two existing windows: adapted for BE-azerty laptop
+super + ctrl + alt + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla}
+    bspc config -w focused split_ratio 0.{1-9} && bspc desktop -E
+
+# Toggle visibility of all the windows (Show/Hide desktop)
+super + Down
+    bspc control --toggle-visibility
+
+# Raise/Lower window gap
+super + {KP_Add,KP_Subtract}
+    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2))
+
+# Raise/Lower desktop padding on all sides
+super + shift + {KP_Add,KP_Subtract}
+    /home/kevin/.scripts/desktop_padding.sh -a {-p,-n} -s 20
+
+# Raise/Lower desktop padding on the upper side
+super + {_,shift + }KP_Up
+    /home/kevin/.scripts/desktop_padding.sh -u {-p,-n} -s 20
+
+# Raise/Lower desktop padding on the lower side
+super + {_,shift + }KP_Down
+    /home/kevin/.scripts/desktop_padding.sh -d {-p,-n} -s 20
+
+# Raise/Lower desktop padding on the right side
+super + {_,shift + }KP_Right
+    /home/kevin/.scripts/desktop_padding.sh -r {-p,-n} -s 20
+
+# Raise/Lower desktop padding on the left side
+super + {_,shift + }KP_Left
+    /home/kevin/.scripts/desktop_padding.sh -l {-p,-n} -s 20
+
+# Toggle frame Right/Left
+super + {_,shift + }Up 
+    /home/kevin/.scripts/desktop_padding.sh {-r,-l} -t half
+
+# Mouse
+#----------------------------------------------------------------------
+# Focus window on click
+~button1
+    bspc pointer -g focus
+
+# Move or resize depending on the mouse button
+super + button{1-3}
+    ; bspc pointer -g {move,resize_side,resize_corner}
+super + @button{1-3}
+    bspc pointer -u
+
+# Mirror and flip leaves of tree (Up->Down, Right->Left, ...)
+#alt + {comma,period}
+#    bspc desktop -F {horizontal,vertical}
+
+# Other keybinds :
+#======================================================================
+
+# Launch applications
+super + Return
+    urxvtc
+
+super + shift + Return
+    urxvtc -e tmux -2
+
+super + space
+    dmenu_run -i -r -h "24" -y "24" -w "250" -q -l "5" -p "> " -fn "-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1" -nb "#272727" -nf "#A3A6AB" -sb "#34322E" -sf "#3465A4"
+
+super + shift + space
+    nemo
+
+Print
+    scrot -q 100 -e 'mv $f /home/kevin/Images'
+#    gnome-screenshot
+
+alt + Print
+    scrot -u -q 100 -e 'mv $f /home/kevin/Images'
+#    gnome-screenshot -w
+
+ctrl + l
+    xscreensaver-command --lock
+#    gnome-screensaver-command --lock
+
+# Laptop Hotkeys
+XF86AudioRaiseVolume
+    pactl set-sink-volume 0 -- +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume 0 -- -5%
+
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
+
+#XF86AudioMedia
+#XF86AudioPlay
+#XF86AudioPause
+#XF86AudioStop
+#XF86AudioPrev
+#XF86AudioNext
+#XF86AudioEject
+#XF86AudioRewind
+#XF86AudioForward
+#XF86AudioRepeat
+#XF86AudioRandomPlay
+
+XF86MonBrightnessUp
+    xbacklight -inc 5%
+
+XF86MonBrightnessDown
+    xbacklight -dec 5%
+
+# Configuration keybinds :
+#======================================================================
+
+# Reload sxhkd config
+super + Escape
+    pkill -USR1 -x sxhkd
+
+# Quit Bspwm
+super + alt + Escape
+    bspc quit

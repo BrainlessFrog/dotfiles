@@ -1,0 +1,43 @@
+! Smyck Colorscheme
+! Dark / Bright
+
+! Black
+!*color0:      #000000
+*color0:      #2E3436
+*color8:      #5D5D5D
+
+! Red
+*color1:      #C75646
+*color9:      #B57974
+
+! Green
+*color2:      #8EB33B
+*color10:     #CDEE69
+
+! Yellow
+*color3:      #D0B03C
+*color11:     #FDE176
+
+! Blue
+*color4:      #72B3CC
+*color12:     #9CD9F0
+
+! Magenta
+*color5:      #C8A0D1
+*color13:     #FBB1F9
+
+! Cyan
+*color6:      #218693
+*color14:     #77DFD8
+
+! White
+*color7:      #B0B0B0
+*color15:     #F7F7F7
+
+! Default
+*background:  #000000
+*foreground:  #B0B0B0
+*cursorColor: #B0B0B0
+
+! URxvt
+URxvt.background: [80]#000000

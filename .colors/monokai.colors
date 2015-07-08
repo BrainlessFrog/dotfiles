@@ -1,0 +1,42 @@
+! Monokai Colorscheme
+! Dark / Bright
+
+! Black
+*color0:      #48483E
+*color8:      #76715E
+
+! Red
+*color1:      #DC2566
+*color9:      #FA2772
+
+! Green
+*color2:      #8FC029
+*color10:     #A7E22E
+
+! Yellow
+*color3:      #D4C96E
+*color11:     #E7DB75
+
+! Blue
+*color4:      #55BCCE
+*color12:     #66D9EE
+
+! Magenta
+*color5:      #9358FE
+*color13:     #AE82FF
+
+! Cyan
+*color6:      #56B7A5
+*color14:     #66EFD5
+
+! White
+*color7:      #ACADA1
+*color15:     #CFD0C2
+
+! Default
+*background:  #272822
+*foreground:  #F1EBEB
+*cursorColor: #F1EBEB
+
+! URxvt
+URxvt.background: [80]#272822

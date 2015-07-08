@@ -1,0 +1,42 @@
+! Z3bra Colorscheme
+! Dark / Bright
+
+! Black
+*color0:      #222222
+*color8:      #4C4C4C
+
+! Red
+*color1:      #8B3E2F
+*color9:      #D75F00
+
+! Green
+*color2:      #526F33
+*color10:     #CEE318
+
+! Yellow
+*color3:      #665847
+*color11:     #EEE685
+
+! Blue
+*color4:      #4A708B
+*color12:     #9AC0CD
+
+! Magenta
+*color5:      #7A378B
+*color13:     #9F79EE
+
+! Cyan
+*color6:      #528B8B
+*color14:     #79CDCD
+
+! White
+*color7:      #999999
+*color15:     #E8E9CA
+
+! Default
+*background:  #222222
+*foreground:  #E8E9CA
+*cursorColor: #E8E9CA
+
+! URxvt
+URxvt.background: [80]#222222

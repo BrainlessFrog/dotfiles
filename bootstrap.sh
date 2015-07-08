@@ -34,7 +34,7 @@ filesList="
 .vim/spell
 .vim/syntax
 .vim/templates
-.vimperator
+.vimperator/colors
 .vimperatorrc
 .vimrc
 .xinitrc
@@ -121,6 +121,13 @@ else
     fi
 fi
 
+# Verify if .vimperator exist, if not create it
+if [[ ! -d "$HOME/.vimperator" ]]; then
+    echo "Creating .vimperator ..."
+    mkdir -p "$HOME/.vimperator"
+    echo "... done."
+    echo ""
+fi
  
 # Change to the dotfiles directory
 echo "Changing to the $dotDir directory ..."

@@ -20,6 +20,9 @@ shopt -s checkwinsize
 # Extended globbing
 shopt -s extglob
 
+# Source git-prompt
+#[[ -f "/usr/share/git/completion/git-prompt.sh" ]] && source "/usr/share/git/completion/git-prompt.sh"
+
 # Color Prompt
 set_prompt () {
     # Initiliazing variables
@@ -85,6 +88,8 @@ set_prompt () {
 
     # Powerline PS1 (Require Powerline fonts):
     PS1="${resetColors}${fgWhiteBold}${lastReturn[2]} ${lastCommand} ${lastReturn[1]}${userColor[2]}${separatorRight}${fgWhiteBold} \u ${userColor[1]}${bgYellow}${separatorRight}${fgWhiteBold} \h ${fgYellowDef}${bgBlue}${separatorRight}${fgWhiteBold} \w ${fgBlueDef}${separatorRight}${resetColors} "
+
+    #PS1="$PS1 $(__git_ps1)"
 
 }
 PROMPT_COMMAND='set_prompt'

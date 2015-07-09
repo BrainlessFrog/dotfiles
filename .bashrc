@@ -21,7 +21,7 @@ shopt -s checkwinsize
 shopt -s extglob
 
 # Source git-prompt
-#[[ -f "/usr/share/git/completion/git-prompt.sh" ]] && source "/usr/share/git/completion/git-prompt.sh"
+[[ -f "/usr/share/git/completion/git-prompt.sh" ]] && source "/usr/share/git/completion/git-prompt.sh"
 
 # Color Prompt
 set_prompt () {
@@ -76,20 +76,23 @@ set_prompt () {
     # Last return
     [[ $lastCommand -eq 0 ]] && local lastReturn=("$goodResult" "$fgGreenDef" "$bgGreen") || local lastReturn=("$badResult" "$fgRedDef" "$bgRed")
 
+    # Git
+    local gitBranch="$(__git_ps1 ' %s')"
+    [[ -z "$gitBranch" ]] && local gitColor=("" "" "") || local gitColor=("$fgRedBold" "$fgRedDef" "$bgRed")
+    [[ -z "$gitBranch" ]] && local gitPowerline="" || local gitPowerline="${fgWhiteBold}${gitBranch} ${gitColor[1]}${separatorRight}"
+
     # Setting PS1
     # Foreground color must come before background color
 
     # One line PS1:
-    #PS1="${resetColors}${fgWhiteBold}${lastCommand} ${lastReturn[0]} ${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${resetColors}\$ "
+    #PS1="${resetColors}${fgWhiteBold}${lastCommand} ${lastReturn[0]} ${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${gitColor[0]}${gitBranch}${resetColors}\$ "
 
     #Two lines prompt:
     #PS1="\n${altChar}l${defChar}[${fgWhiteBold}${lastCommand}${resetColors}]${altChar}q${defChar}[${lastReturn}${resetColors}]${altChar}q${defChar}[${userColor[0]}\u@\h${resetColors}]:[${fgBlueBold}\w${resetColors}]\n${altChar}mq${defChar}${endLine}${resetColors} "
     #PS1="\n${altChar}lu${defChar}${fgWhiteBold}${lastCommand}${resetColors}${altChar}tqu${defChar}${lastReturn}${resetColors}${altChar}tqu${defChar}${userColor[0]}\u@\h${resetColors}${altChar}t${defChar}${endLine}${fgBlueBold} \w${resetColors}\n${altChar}mq${defChar}${endLine}${resetColors} "
 
     # Powerline PS1 (Require Powerline fonts):
-    PS1="${resetColors}${fgWhiteBold}${lastReturn[2]} ${lastCommand} ${lastReturn[1]}${userColor[2]}${separatorRight}${fgWhiteBold} \u ${userColor[1]}${bgYellow}${separatorRight}${fgWhiteBold} \h ${fgYellowDef}${bgBlue}${separatorRight}${fgWhiteBold} \w ${fgBlueDef}${separatorRight}${resetColors} "
-
-    #PS1="$PS1 $(__git_ps1)"
+    PS1="${resetColors}${fgWhiteBold}${lastReturn[2]} ${lastCommand} ${lastReturn[1]}${userColor[2]}${separatorRight}${fgWhiteBold} \u ${userColor[1]}${bgYellow}${separatorRight}${fgWhiteBold} \h ${fgYellowDef}${bgBlue}${separatorRight}${fgWhiteBold} \w ${fgBlueDef}${gitColor[2]}${separatorRight}${gitPowerline}${resetColors} "
 
 }
 PROMPT_COMMAND='set_prompt'
@@ -120,6 +123,7 @@ alias ll='ls -lAh'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 # Avoid -_-
 alias exxit='exit'

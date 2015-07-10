@@ -2,6 +2,8 @@
 # ~/.bash_profile
 #
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+
+PROMPT_COMMAND='set_prompt -1a'
 
 #[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx

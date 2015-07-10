@@ -1,32 +1,24 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# Sourcing other files
+[[ -f "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
+[[ -f "/etc/bash_completion" ]] && source "/etc/bash_completion"
+[[ -f "/usr/share/git/completion/git-prompt.sh" ]] && source "/usr/share/git/completion/git-prompt.sh"
 
-# don't put duplicate lines in the history. See bash(1) for more options
-# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
+# History
 export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
-# ... or force ignoredups and ignorespace
 export HISTCONTROL=ignoreboth
-
-# Append to the history file, don't overwrite it
 shopt -s histappend
 
-# For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-
-# Check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# Windows size
 shopt -s checkwinsize
 
 # Extended globbing
 shopt -s extglob
 
-# Source git-prompt
-[[ -f "/usr/share/git/completion/git-prompt.sh" ]] && source "/usr/share/git/completion/git-prompt.sh"
-
 # Color Prompt
 set_prompt () {
     # Initiliazing variables
-    local lastCommand=$? # Must come first!
+    local lastCommand="$?"
+    local prompType="$1"
     local defChar="\[\017\]"
     local altChar="\[\016\]"
 
@@ -74,37 +66,41 @@ set_prompt () {
     [[ $(id -u) -eq 0 ]] && local userColor=("$fgRedBold" "$fgRedDef" "$bgRed") || local userColor=("$fgGreenBold" "$fgGreenDef" "$bgGreen")
 
     # Last return
-    [[ $lastCommand -eq 0 ]] && local lastReturn=("$goodResult" "$fgGreenDef" "$bgGreen") || local lastReturn=("$badResult" "$fgRedDef" "$bgRed")
+    [[ $lastCommand -eq 0 ]] && local lastReturn=("$goodResult" "${fgGreenBold}V" "$fgGreenDef" "$bgGreen") || local lastReturn=("$badResult" "${fgRedBold}X" "$fgRedDef" "$bgRed")
 
     # Git
-    local gitBranch="$(__git_ps1 ' %s')"
-    [[ -z "$gitBranch" ]] && local gitColor=("" "" "") || local gitColor=("$fgRedBold" "$fgRedDef" "$bgRed")
-    [[ -z "$gitBranch" ]] && local gitPowerline="" || local gitPowerline="${fgWhiteBold}${gitBranch} ${gitColor[1]}${separatorRight}"
+    [[ -z "$(__git_ps1 '%s')" ]] && local gitColor=("" "" "") || local gitColor=("$fgRedBold" "$fgRedDef" "$bgRed")
 
     # Setting PS1
     # Foreground color must come before background color
-
-    # One line PS1:
-    #PS1="${resetColors}${fgWhiteBold}${lastCommand} ${lastReturn[0]} ${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${gitColor[0]}${gitBranch}${resetColors}\$ "
-
-    #Two lines prompt:
-    #PS1="\n${altChar}l${defChar}[${fgWhiteBold}${lastCommand}${resetColors}]${altChar}q${defChar}[${lastReturn}${resetColors}]${altChar}q${defChar}[${userColor[0]}\u@\h${resetColors}]:[${fgBlueBold}\w${resetColors}]\n${altChar}mq${defChar}${endLine}${resetColors} "
-    #PS1="\n${altChar}lu${defChar}${fgWhiteBold}${lastCommand}${resetColors}${altChar}tqu${defChar}${lastReturn}${resetColors}${altChar}tqu${defChar}${userColor[0]}\u@\h${resetColors}${altChar}t${defChar}${endLine}${fgBlueBold} \w${resetColors}\n${altChar}mq${defChar}${endLine}${resetColors} "
-
-    # Powerline PS1 (Require Powerline fonts):
-    PS1="${resetColors}${fgWhiteBold}${lastReturn[2]} ${lastCommand} ${lastReturn[1]}${userColor[2]}${separatorRight}${fgWhiteBold} \u ${userColor[1]}${bgYellow}${separatorRight}${fgWhiteBold} \h ${fgYellowDef}${bgBlue}${separatorRight}${fgWhiteBold} \w ${fgBlueDef}${gitColor[2]}${separatorRight}${gitPowerline}${resetColors} "
-
+    case "$prompType" in
+        "-1a")
+            local gitBranch="$(__git_ps1 ' %s')"
+            PS1="${resetColors}${fgWhiteBold}${lastCommand} ${lastReturn[1]} ${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${gitColor[0]}${gitBranch}${resetColors}\$ "
+            ;;
+        "-1b")
+            local gitBranch="$(__git_ps1 ' %s')"
+            PS1="${resetColors}${fgWhiteBold}${lastCommand} ${lastReturn[0]} ${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${gitColor[0]}${gitBranch}${resetColors}\$ "
+            ;;
+        "-2a")
+            local gitBranch="$(__git_ps1 ' [%s]')"
+            PS1="\n${altChar}l${defChar}[${fgWhiteBold}${lastCommand}${resetColors}]${altChar}q${defChar}[${lastReturn[0]}${resetColors}]${altChar}q${defChar}[${userColor[0]}\u@\h${resetColors}]:[${fgBlueBold}\w${gitColor[0]}${gitBranch}${resetColors}]\n${altChar}mq${defChar}${endLine}${resetColors} "
+            ;;
+        "-2b")
+            local gitBranch="$(__git_ps1 ' %s')"
+            PS1="\n${altChar}lu${defChar}${fgWhiteBold}${lastCommand}${resetColors}${altChar}tqu${defChar}${lastReturn[0]}${resetColors}${altChar}tqu${defChar}${userColor[0]}\u@\h${resetColors}${altChar}t${defChar}${endLine}${fgBlueBold} \w${gitColor[0]}${gitBranch}${resetColors}\n${altChar}mq${defChar}${endLine}${resetColors} "
+            ;;
+        "-p")
+            local gitBranch="$(__git_ps1 ' %s')"
+            [[ -z "$gitBranch" ]] && local gitPowerline="" || local gitPowerline="${fgWhiteBold}${gitBranch} ${gitColor[1]}${separatorRight}"
+            PS1="${resetColors}${fgWhiteBold}${lastReturn[3]} ${lastCommand} ${lastReturn[2]}${userColor[2]}${separatorRight}${fgWhiteBold} \u ${userColor[1]}${bgYellow}${separatorRight}${fgWhiteBold} \h ${fgYellowDef}${bgBlue}${separatorRight}${fgWhiteBold} \w ${fgBlueDef}${gitColor[2]}${separatorRight}${gitPowerline}${resetColors} "
+            ;;
+        *)
+            PS1="${resetColors}${userColor[0]}\u@\h${resetColors}:${fgBlueBold}\w${resetColors}\$ "
+            ;;
+    esac
 }
-PROMPT_COMMAND='set_prompt'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+PROMPT_COMMAND='set_prompt -p'
 
 # Enable color support of ls and also add handy aliases
 alias ls='ls --color=auto'
@@ -160,13 +156,6 @@ alias gupdate='git add . && git commit -m "Global update $(date +%F)" && git pus
 alias pweb='ping -c 5 -i 3 195.238.2.21'
 alias mvlc='cvlc --no-video'
 
-# Enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
-
 # Enable completion for sudo
 complete -cf sudo
 
@@ -182,7 +171,6 @@ set -o vi
 # Export variable
 export PATH="$PATH:/home/kevin/.scripts:/home/kevin/.config/bspwm"
 export EDITOR="/usr/bin/vim"
-#export TERM="screen-256color"
 export VISUAL="/usr/bin/vim"
 
 # CSGO

@@ -27,7 +27,7 @@ bspc config initial_polarity      second_child
 bspc config center_pseudo_tiled   true
 bspc config auto_cancel           true
 #bspc config auto_alternate        true
-#bspc config ignore_ewmh_focus     true
+bspc config ignore_ewmh_focus     true
 
 # Monitor
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10

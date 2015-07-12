@@ -1,5 +1,5 @@
 #!/bin/bash
-#Script nautilus de renommage en masse
+#Script nautilus de renommage de séries
 
 OLDIFS="$IFS"
 IFS="

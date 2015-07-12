@@ -100,7 +100,11 @@ set_prompt () {
             ;;
     esac
 }
-PROMPT_COMMAND='set_prompt -p'
+if [[ "$-" =~ i ]]; then
+    PROMPT_COMMAND='set_prompt -p'
+else
+    PROMPT_COMMAND='set_prompt -1a'
+fi
 
 # Enable color support of ls and also add handy aliases
 alias ls='ls --color=auto'

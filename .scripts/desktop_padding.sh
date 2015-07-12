@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Change the desktop padding in Bspwm
+# By BrainlessFrog
+
 # Dependencies: Bspwm
 
 POSITIVE=false

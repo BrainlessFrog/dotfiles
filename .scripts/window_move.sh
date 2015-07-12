@@ -1,7 +1,7 @@
 #!/bin/bash
-
 # Move all types of windows in Bspwm
-# Modified from: https://github.com/windelicato/dotfiles/blob/master/scripts/window_move.sh
+# Modified by BrainlessFrog from: https://github.com/windelicato/dotfiles/blob/master/scripts/window_move.sh
+
 # Dependencies: Bspwm and Xdo
 
 POSITIVE=false

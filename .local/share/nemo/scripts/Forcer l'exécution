@@ -1,5 +1,6 @@
 #!/bin/bash
 # Executer des scripts qui ne peuvent pas etre 'chmod +x' (ex.: sur l'O2Media)
+# Par BrainlessFrog
 
 OLDIFS="$IFS"
 IFS="

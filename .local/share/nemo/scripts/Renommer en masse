@@ -1,5 +1,6 @@
 #!/bin/bash
 #Script nautilus de renommage en masse
+# Par BrainlessFrog
 
 OLDIFS="$IFS"
 IFS="

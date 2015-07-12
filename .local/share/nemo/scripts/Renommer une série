@@ -1,5 +1,6 @@
 #!/bin/bash
 #Script nautilus de renommage de séries
+# Par BrainlessFrog
 
 OLDIFS="$IFS"
 IFS="

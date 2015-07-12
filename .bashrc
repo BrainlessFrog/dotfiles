@@ -100,10 +100,10 @@ set_prompt () {
             ;;
     esac
 }
-if [[ "$-" =~ i ]]; then
-    PROMPT_COMMAND='set_prompt -p'
-else
+if [[ "$TERM" == "linux" ]]; then
     PROMPT_COMMAND='set_prompt -1a'
+else
+    PROMPT_COMMAND='set_prompt -p'
 fi
 
 # Enable color support of ls and also add handy aliases

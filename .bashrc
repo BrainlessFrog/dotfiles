@@ -160,6 +160,9 @@ alias gupdate='git add . && git commit -m "Global update $(date +%F)" && git pus
 alias pweb='ping -c 5 -i 3 195.238.2.21'
 alias mvlc='cvlc --no-video'
 
+# Sudo vim
+alias svim="HOME=/home/`who | cut -d ' ' -f 1 | uniq | sed '/root/d'` && sudo vim -u $HOME/.vimrc"
+
 # Enable completion for sudo
 complete -cf sudo
 

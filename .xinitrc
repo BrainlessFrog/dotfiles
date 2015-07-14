@@ -19,7 +19,7 @@ export _JAVA_AWT_WM_NONREPARENTING="1"
 #restore_alsa &
 
 # Redefine PATH
-export PATH="$PATH:/home/$USER/.scripts:/home/$USER/.config/bspwm"
+export PATH="$PATH:$HOME/.scripts:$HOME/.config/bspwm"
 
 [[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
 
@@ -30,7 +30,7 @@ setDesktopFonts() {
     xset +fp /usr/share/fonts/OTF
     xset +fp /usr/share/fonts/steam-fonts
     xset +fp /usr/share/fonts/TTF
-    xset +fp /home/kevin/.fonts
+    xset +fp $HOME/.fonts
     xset fp rehash
 }
 
@@ -62,15 +62,15 @@ setLaptopFonts() {
     xset +fp /usr/share/fonts/truetype/wqy
     xset +fp /usr/share/fonts/type1/gsfonts
     xset +fp /usr/share/fonts/type1/mathml
-    xset +fp /home/kevin/.fonts
+    xset +fp $HOME/.fonts
     xset fp rehash
 }
 
 $DESKTOP && setDesktopFonts || setLaptopFonts
 
 # Load Xresources
-[[ -f ~/.Xresources ]] && xrdb -load ~/.Xresources
-[[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
+[[ -f ~/.Xresources ]] && xrdb -load $HOME/.Xresources
+[[ -f ~/.Xdefaults ]] && xrdb -merge $HOME/.Xdefaults
 
 # Systemd
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
@@ -87,7 +87,7 @@ xsetroot -cursor_name left_ptr
 #start-pulseaudio-x11 &
 
 numlockx on &
-$DESKTOP && sxhkdConfig="/home/kevin/.config/sxhkd/sxhkdrc-desktop" || sxhkdConfig="/home/kevin/.config/sxhkd/sxhkdrc-laptop"
+$DESKTOP && sxhkdConfig="$HOME/.config/sxhkd/sxhkdrc-desktop" || sxhkdConfig="$HOME/.config/sxhkd/sxhkdrc-laptop"
 sxhkd -c "$sxhkdConfig" -f 100 &
 urxvtd &
 

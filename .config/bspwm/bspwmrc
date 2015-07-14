@@ -33,7 +33,7 @@ bspc config ignore_ewmh_focus     true
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
 # Rules
-bspc config external_rules_command /home/kevin/.config/bspwm/external_rules
+bspc config external_rules_command $HOME/.config/bspwm/external_rules
 # Desktops
 bspc rule -a Steam desktop=^6 follow=false focus=false
 bspc rule -a jd-Main desktop=^7 pseudo_tiled=true
@@ -50,12 +50,10 @@ bspc rule -a pavucontrol floating=true center=true
 # Autostart
 gsettings set org.nemo.desktop show-desktop-icons false &
 gsettings set org.cinnamon.desktop.default-applications.terminal exec urxvtc &
-#./.scripts/setSynclient.sh &
 xscreensaver -nosplash &
 nitrogen --restore &
 compton &
 $DESKTOP && runDesktop || runLaptop
-#conky -c .conkyrc_rings &
 ./.config/bspwm/panel &
 glipper &
 # 'Launch' nemo a first time, so it will launch faster after

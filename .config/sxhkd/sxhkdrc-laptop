@@ -241,3 +241,5 @@ super + Escape
 # Quit Bspwm
 super + alt + Escape
     bspc quit
+
+# vim: set ft=sxhkdrc:

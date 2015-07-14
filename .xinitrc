@@ -1,8 +1,6 @@
 #!/bin/sh
-#
 # ~/.xinitrc
-#
-# Executed by startx (run your window manager from here)
+# By BrainlessFrog
 
 # Export GKT2 var for QtConfig
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"

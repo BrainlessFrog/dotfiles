@@ -1,6 +1,5 @@
-#
 # ~/.bash_profile
-#
+# By BrainlessFrog
 
 [[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
 

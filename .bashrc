@@ -1,3 +1,6 @@
+# ~/.bashrc
+# By BrainlessFrog
+
 # Sourcing other files
 [[ -f "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
 [[ -f "/etc/bash_completion" ]] && source "/etc/bash_completion"
@@ -176,7 +179,7 @@ shopt -s cdspell
 set -o vi
 
 # Export variable
-export PATH="$PATH:/home/kevin/.scripts:/home/kevin/.config/bspwm"
+export PATH="$PATH:$HOME/.scripts:$HOME/.config/bspwm"
 export EDITOR="/usr/bin/vim"
 export VISUAL="/usr/bin/vim"
 

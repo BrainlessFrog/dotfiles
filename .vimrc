@@ -1,3 +1,6 @@
+" ~/.vimrc
+" By BrainlessFrog
+
 " Vundle settings:
 set nocompatible
 filetype off
@@ -35,7 +38,7 @@ let g:EasyMotion_smartcase = 1
 " Vim settings:
 syntax on
 
-" Fix bad copy/paste indentation with tmux
+" Fix bad copy/paste indentation within tmux
 function! WrapForTmux(s)
     if !exists('$TMUX')
         return a:s
@@ -90,21 +93,12 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-" Couleurs de l'omni complétion (des mot déjà écris - ^n)
-" A l'origine :
-"highlight Pmenu ctermbg=5 
-highlight Pmenu ctermbg=4
-
-
-" Correction orthographique
-" Plus d'infos, voir http://www.road2mayotte.org/blog/?p=2311 et autres sites
-" Peut aussi mettre :
+" Spell
 "setlocal spell spelllang=fr,en
 setlocal spelllang=fr
-" Souligne les fautes
 highlight SpellBad cterm=underline ctermfg=1 ctermbg=NONE
 
-" (Dés)activer la correction orthographique avec F12
+" Toggle spell
 function! ToggleSpell()
     if &spell
         set nospell
@@ -115,8 +109,7 @@ endfunction
 noremap <F12> :call ToggleSpell()<cr>
 inoremap <F12> <Esc>:call ToggleSpell()<cr>a
 
-" Remplacement automatique des accents en LaTeX
-" Plus d'infos, voir http://linuxfr.org/forums/47/25096.html et autres sites
+" LaTex settings
 augroup filetypedetect
 au BufNewFile,BufRead *.tex inoremap à \`{a}
 au BufNewFile,BufRead *.tex inoremap À \`{A}

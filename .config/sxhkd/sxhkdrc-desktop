@@ -203,7 +203,7 @@ alt + Print
     scrot -u -q 100 -e 'mv $f /home/kevin/Images'
 #    gnome-screenshot -w
 
-ctrl + l
+ctrl + shift + l
     xscreensaver-command --lock
 #    gnome-screensaver-command --lock
 

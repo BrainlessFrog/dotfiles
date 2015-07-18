@@ -34,7 +34,20 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:indentLine_char = '┆'
 " let g:indentLine_char = '│'
 " EasyMotion
+let mapleader = "\<Space>"
+" map <SPACE> <Leader>
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
+map <Leader>l <Plug>(easymotion-lineforward)
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Leader>h <Plug>(easymotion-linebackward)
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+nmap <Leader>s <Plug>(easymotion-s2)
+nmap <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>e <Plug>(easymotion-bd-e)
 
 " Vim settings:
 syntax on

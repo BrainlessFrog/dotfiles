@@ -157,6 +157,7 @@ alias gcom='git commit -m'
 alias gpull='git pull origin master'
 alias gpush='git push origin master'
 alias grm='git rm'
+alias gmv='git mv'
 alias gupdate='git add . && git commit -m "Global update $(date +%F)" && git push origin master'
 
 # Other aliases

@@ -5,17 +5,17 @@
 [[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
 
 runDesktop() {
-    ./.scripts/disableAccel.sh &
+    $HOME/.scripts/disableAccel.sh &
     conky -c .conkyrc_desktop &
 }
 
 runLaptop() {
-    ./.scripts/setSynclient.sh &
+    $HOME/.scripts/setSynclient.sh &
     conky -c .conkyrc_laptop &
 }
 
 # Colors
-./bspwm_colors
+$HOME/.config/bspwm/bspwm_colors
 
 # Config
 bspc config border_width          2
@@ -57,7 +57,7 @@ xscreensaver -nosplash &
 nitrogen --restore &
 compton &
 $DESKTOP && runDesktop || runLaptop
-./.config/bspwm/panel &
+$HOME/.config/bspwm/panel &
 glipper &
 # 'Launch' nemo a first time, so it will launch faster after
 nemo -n &

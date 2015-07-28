@@ -87,8 +87,8 @@ xsetroot -cursor_name left_ptr
 #start-pulseaudio-x11 &
 
 numlockx on &
-$DESKTOP && sxhkdConfig="$HOME/.config/sxhkd/sxhkdrc-desktop" || sxhkdConfig="$HOME/.config/sxhkd/sxhkdrc-laptop"
-sxhkd -c "$sxhkdConfig" -f 100 &
+$DESKTOP && sxhkdConfig="$HOME/.config/sxhkd/desktop.sxhkdrc" || sxhkdConfig="$HOME/.config/sxhkd/laptop.sxhkdrc"
+sxhkd -c "$HOME/.config/sxhkd/base.sxhkdrc" "$sxhkdConfig" -f 100 &
 urxvtd &
 
 # Ctrl+Alt+Backspace to kill Xorg

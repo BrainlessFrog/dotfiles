@@ -1,9 +1,7 @@
 # bspwm Hotkeys :
 #======================================================================
 
-# Close/Kill window: adapted to pseudo-qwerty
-super + {_,shift + }z
-    bspc window -{c,k}
+# Close/Kill window
 alt + F4
     bspc window -c
 
@@ -33,10 +31,6 @@ super + {_,shift +}p
 super + alt + p
     bspc window -t sticky
 
-# Toggle last focused Window/Desktop back and forth: adapted to pseudo-qwerty
-super + {_,shift + }q
-    bspc {desktop,window} -f last
-
 # Select oldest/newest created window
 super + {o,n}
     bspc control --record-history off; \
@@ -47,25 +41,21 @@ super + {o,n}
 super + y
     bspc window -w last.manual
 
-# Swap selected window with the biggest/last window
-super + {_,shift +}comma
-    bspc window -s {biggest,last}
-
 # Focus window to left/down/up/right
 super + {h,j,k,l}
     bspc window -f {left,down,up,right}
 
 # Move window to left/right - down/up: for tiled windows, move into the preselection if there is one, else swap it
 super + shift + {h,l}
-    /home/kevin/.scripts/window_move.sh {-n,-p} -x -s 10
+    $HOME/.scripts/window_move.sh {-n,-p} -x -s 10
 super + shift + {j,k}
-    /home/kevin/.scripts/window_move.sh {-p,-n} -y -s 10
+    $HOME/.scripts/window_move.sh {-p,-n} -y -s 10
 
 # Resize current windows left/right - down/up
 super + alt + {h,l}
-    /home/kevin/.scripts/window_resize.sh {-n,-p} -x -s 10
+    $HOME/.scripts/window_resize.sh {-n,-p} -x -s 10
 super + alt + {j,k}
-    /home/kevin/.scripts/window_resize.sh {-p,-n} -y -s 10
+    $HOME/.scripts/window_resize.sh {-p,-n} -y -s 10
 
 # Circulate leaves of the tree Backward/Forward
 super + {_,shift + }c
@@ -94,10 +84,6 @@ super + alt + {Left,Right}
 # Circulate between occupied desktops
 super + {_,shift +}Tab
     bspc desktop -f {next,prev}.occupied
-~button8
-    bspc desktop -f next.occupied
-~button9
-    bspc desktop -f prev.occupied
 
 # Circulate between local windows
 alt + {_,shift +}Tab
@@ -106,30 +92,6 @@ alt + {_,shift +}Tab
 # Cut the window at left/down/up/right
 super + ctrl + {h,j,k,l}
     bspc window -p {left,down,up,right}
-
-# Cancel one/all cut(s)
-super + {_,shift + }w
-    bspc {window -p cancel,desktop -c}
-
-# Focus the given desktop
-super + {1-9,0}
-    bspc desktop -f ^{1-9,10}
-
-# Move a window to the given desktop and keep focus
-super + shift + {1-9,0}
-    bspc window -d ^{1-9,10} -f
-
-# Move a window to the given desktop without keeping focus
-super + alt + {1-9,0}
-    bspc window -d ^{1-9,10}
-
-# Set window split ratio of the preselection
-super + ctrl + {1-9,0}
-    bspc window -r 0.{1-9}
-
-# Set window split ratio between two existing windows
-super + ctrl +alt + {1-9,0}
-    bspc config -w focused split_ratio 0.{1-9} && bspc desktop -E
 
 # Toggle visibility of all the windows (Show/Hide desktop)
 super + Down
@@ -141,27 +103,27 @@ super + {KP_Add,KP_Subtract}
 
 # Raise/Lower desktop padding on all sides
 super + shift + {KP_Add,KP_Subtract}
-    /home/kevin/.scripts/desktop_padding.sh -a {-p,-n} -s 20
+    $HOME/.scripts/desktop_padding.sh -a {-p,-n} -s 20
 
 # Raise/Lower desktop padding on the upper side
 super + {_,shift + }KP_Up
-    /home/kevin/.scripts/desktop_padding.sh -u {-p,-n} -s 20
+    $HOME/.scripts/desktop_padding.sh -u {-p,-n} -s 20
 
 # Raise/Lower desktop padding on the lower side
 super + {_,shift + }KP_Down
-    /home/kevin/.scripts/desktop_padding.sh -d {-p,-n} -s 20
+    $HOME/.scripts/desktop_padding.sh -d {-p,-n} -s 20
 
 # Raise/Lower desktop padding on the right side
 super + {_,shift + }KP_Right
-    /home/kevin/.scripts/desktop_padding.sh -r {-p,-n} -s 20
+    $HOME/.scripts/desktop_padding.sh -r {-p,-n} -s 20
 
 # Raise/Lower desktop padding on the left side
 super + {_,shift + }KP_Left
-    /home/kevin/.scripts/desktop_padding.sh -l {-p,-n} -s 20
+    $HOME/.scripts/desktop_padding.sh -l {-p,-n} -s 20
 
 # Toggle frame Right/Left
 super + {_,shift + }Up 
-    /home/kevin/.scripts/desktop_padding.sh {-r,-l} -t half
+    $HOME/.scripts/desktop_padding.sh {-r,-l} -t half
 
 # Mouse
 #----------------------------------------------------------------------
@@ -196,16 +158,13 @@ super + shift + space
     nemo
 
 Print
-    scrot -q 100 -e 'mv $f /home/kevin/Images'
-#    gnome-screenshot
+    scrot -q 100 -e 'mv $f $HOME/Images'
 
 alt + Print
-    scrot -u -q 100 -e 'mv $f /home/kevin/Images'
-#    gnome-screenshot -w
+    scrot -u -q 100 -e 'mv $f $HOME/Images'
 
 ctrl + shift + l
     xscreensaver-command --lock
-#    gnome-screensaver-command --lock
 
 
 # Configuration keybinds :
@@ -218,5 +177,3 @@ super + Escape
 # Quit Bspwm
 super + alt + Escape
     bspc quit
-
-# vim: set ft=sxhkdrc:

@@ -23,8 +23,7 @@ SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
 #PANEL_WIDTH=$((SCREEN_WIDTH-24))
 
 # Make dmenu use the same font and color
-sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "/home/$USER/.config/sxhkd/sxhkdrc-desktop"
-sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "/home/$USER/.config/sxhkd/sxhkdrc-laptop"
+sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "$HOME/.config/sxhkd/base.sxhkdrc"
 pkill -USR1 -x sxhkd
 
 # Configuring bspwm

@@ -1,0 +1,48 @@
+# bspwm Hotkeys :
+#======================================================================
+
+# Close/Kill window: adapted to pseudo-qwerty
+super + {_,shift + }z
+    bspc window -{c,k}
+
+# Toggle last focused Window/Desktop back and forth: adapted to pseudo-qwerty
+super + {_,shift + }q
+    bspc {desktop,window} -f last
+
+# Swap selected window with the biggest/last window
+super + {_,shift +}comma
+    bspc window -s {biggest,last}
+
+# Focus window to left/down/up/right
+super + {h,j,k,l}
+    bspc window -f {left,down,up,right}
+
+# Move to Previous/Next desktop
+super + {Left,Right}
+    bspc desktop -f {prev,next}
+ctrl + alt + {Left,Right}
+    bspc desktop -f {prev,next}
+
+# Cancel one/all cut(s)
+super + {_,shift + }w
+    bspc {window -p cancel,desktop -c}
+
+# Focus the given desktop
+super + {1-9,0}
+    bspc desktop -f ^{1-9,10}
+
+# Move a window to the given desktop and keep focus
+super + shift + {1-9,0}
+    bspc window -d ^{1-9,10} -f
+
+# Move a window to the given desktop without keeping focus
+super + alt + {1-9,0}
+    bspc window -d ^{1-9,10}
+
+# Set window split ratio of the preselection
+super + ctrl + {1-9,0}
+    bspc window -r 0.{1-9}
+
+# Set window split ratio between two existing windows
+super + ctrl + alt + {1-9,0}
+    bspc config -w focused split_ratio 0.{1-9} && bspc desktop -E

@@ -176,4 +176,4 @@ super + Escape
 
 # Quit Bspwm
 super + alt + Escape
-    bspc quit
+    killall panel && bspc quit

@@ -88,7 +88,7 @@ xsetroot -cursor_name left_ptr
 
 numlockx on &
 $DESKTOP && sxhkdConfig="$HOME/.config/sxhkd/desktop.sxhkdrc" || sxhkdConfig="$HOME/.config/sxhkd/laptop.sxhkdrc"
-sxhkd -c "$HOME/.config/sxhkd/base.sxhkdrc" "$sxhkdConfig" -f 100 &
+sxhkd -f 100 -c "$HOME/.config/sxhkd/base.sxhkdrc" "$sxhkdConfig" &
 urxvtd &
 
 # Ctrl+Alt+Backspace to kill Xorg

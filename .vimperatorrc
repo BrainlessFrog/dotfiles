@@ -50,7 +50,39 @@ set editor="urxvt -e vim"
 " uBlock without Navbar fix
 style -name ublock * #nav-bar * { visibility: visible; }
 
-" Firefox built-in options
+" Show quit warning
 set! browser.showQuitWarning=true
+
+" Youtube HTML5
+set! media.mediasource.enabled=true
+set! media.mediasource.webm.enabled=true
+" set! media.mediasource.ignore_codecs=true
+" set! media.encoder.webm.enabled=true
+" set! media.fragmented-mp4.enabled=true
+" set! media.fragmented-mp4.exposed=true
+" set! media.fragmented-mp4.ffmpeg.enabled=true
+" set! media.fragmented-mp4.gmp.enabled=true
+" set! media.mediasource.mp4.enable=true
+" set! media.fragmented-mp4.use-blank-decoder=false
+
+" Privacy settings
+set! browser.safebrowsing.enabled=false
+set! browser.safebrowsing.malware.enabled=false
+set! browser.send_pings=false
+set! browser.send_pings.max_per_link=0
+set! datareporting.healthreport.uploadEnabled=false
+set! dom.event.clipboardevents.enabled=false
+set! dom.storage.enabled=false
+set! geo.enabled=false
+" set! network.cookie.cookieBehavior=1
+" set! network.cookie.lifetimePolicy=2
+" set! network.dns.disablePrefetch=true
+set! network.http.sendRefererHeader=0
+set! network.http.sendSecureXSiteReferrer=false
+" set! network.prefetch-next=false
+set! privacy.donottrackheader.enabled=true
+set! privacy.donottrackheader.value=1
+" set! privacy.trackingprotection.enabled=true
+set! toolkit.telemetry.enabled=false
 
 " vim: set ft=vimperator:

@@ -103,7 +103,7 @@ case "$windowClass" in
                 *"Chat")
                     steamChat=("true" "$otherID")
                     ;;
-                "Mumble")
+                "Mumble"*)
                     mumbleBase=("true" "$otherID")
                     ;;
                 *)
@@ -117,27 +117,27 @@ case "$windowClass" in
             case "$windowName" in
                 "Steam")
                     if [[ "${steamFriends[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.8 window=${steamFriends[1]}"
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.8 window=${steamFriends[1]} follow=false focus=false"
                     elif [[ "${mumbleBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.3 window=${mumbleBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.3 window=${mumbleBase[1]} follow=false focus=false"
                     else
-                        echo "desktop=$desktopNumber"
+                        echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 "Friends"|"Amis")
                     if [[ "${steamBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2 window=${steamBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2 window=${steamBase[1]} follow=false focus=false"
                     else
-                        echo "desktop=$desktopNumber"
+                        echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 *"Chat")
                     if [[ "${mumbleBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.5 window=${mumbleBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.5 window=${mumbleBase[1]} follow=false focus=false"
                     elif [[ "${steamBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]} follow=false focus=false"
                     else
-                        echo "desktop=$desktopNumber"
+                        echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 *)

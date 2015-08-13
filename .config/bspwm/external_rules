@@ -3,13 +3,14 @@
 windowID="$1"
 windowClass="$2"
 windowInstance="$3"
-logFile="$(dirname \"$0\")/er_log.txt"
+#logFile="$(dirname \"$0\")/er_log.txt"
+logFile="/tmp/er_log.txt"
 
 getDebug() {
     local winID="$1"
     local winClass="$2"
     local winInstance="$3"
-    local winName=`xprop -id "$winID" | grep "_NET_WM_NAME" | cut -d '"' -f 2`
+    local winName=`xprop -id "$winID" | grep "WM_NAME" | head -n 1 | cut -d '"' -f 2`
     local winRole=`xprop -id "$winID" | grep "WM_WINDOW_ROLE" | cut -d '"' -f 2`
     local debugFile="$4"
 
@@ -23,7 +24,7 @@ getDebug() {
 
 getWindowName() {
     local winID="$1"
-    local winName=`xprop -id "$winID" | grep "_NET_WM_NAME" | cut -d '"' -f 2`
+    local winName=`xprop -id "$winID" | grep "WM_NAME" | head -n 1 | cut -d '"' -f 2`
 
     echo "$winName"
 }
@@ -77,6 +78,81 @@ case "$windowClass" in
         else
             # Others
             echo "desktop=$desktopNumber floating=true"
+        fi
+        ;;
+    "Steam"|"Mumble")
+        windowName=`getWindowName "$windowID"`
+        windowRole=`getWindowRole "$windowID"`
+        desktopNumber="^6"
+
+        steamBase=("false" "")
+        steamFriends=("false" "")
+        steamChat=("false" "")
+        mumbleBase=("false" "")
+
+        # Determine which windows are already present
+        for otherID in `bspc query -W --desktop "$desktopNumber" | grep -v "$windowID"`; do
+            otherName=`getWindowName "$otherID"`
+            case "$otherName" in
+                "Steam")
+                    steamBase=("true" "$otherID")
+                    ;;
+                "Friends"|"Amis")
+                    steamFriends=("true" "$otherID")
+                    ;;
+                *"Chat")
+                    steamChat=("true" "$otherID")
+                    ;;
+                "Mumble")
+                    mumbleBase=("true" "$otherID")
+                    ;;
+                *)
+                    ;;
+            esac
+        done
+
+        # Place window
+        if [[ "$windowClass" == "Steam" ]]; then
+        # Steam
+            case "$windowName" in
+                "Steam")
+                    if [[ "${steamFriends[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.8 window=${steamFriends[1]}"
+                    elif [[ "${mumbleBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.3 window=${mumbleBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber"
+                    fi
+                    ;;
+                "Friends"|"Amis")
+                    if [[ "${steamBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2 window=${steamBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber"
+                    fi
+                    ;;
+                *"Chat")
+                    if [[ "${mumbleBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.5 window=${mumbleBase[1]}"
+                    elif [[ "${steamBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber"
+                    fi
+                    ;;
+                *)
+                    echo "desktop=$desktopNumber floating=true"
+                    ;;
+            esac
+        else
+        # Mumble
+            if [[ "${steamChat[0]}" == "true" ]]; then
+                echo "desktop=$desktopNumber split_dir=down split_ratio=0.5 window=${steamChat[1]}"
+            elif [[ "${steamBase[0]}" == "true" ]]; then
+                echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]}"
+            else
+                echo "desktop=$desktopNumber"
+            fi
         fi
         ;;
     "Skype")

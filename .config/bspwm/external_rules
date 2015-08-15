@@ -119,7 +119,7 @@ case "$windowClass" in
                     if [[ "${steamFriends[0]}" == "true" ]]; then
                         echo "desktop=$desktopNumber split_dir=right split_ratio=0.8 window=${steamFriends[1]} follow=false focus=false"
                     elif [[ "${mumbleBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.3 window=${mumbleBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.4 window=${mumbleBase[1]} follow=false focus=false"
                     else
                         echo "desktop=$desktopNumber follow=false focus=false"
                     fi
@@ -135,7 +135,7 @@ case "$windowClass" in
                     if [[ "${mumbleBase[0]}" == "true" ]]; then
                         echo "desktop=$desktopNumber split_dir=up split_ratio=0.5 window=${mumbleBase[1]} follow=false focus=false"
                     elif [[ "${steamBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.6 window=${steamBase[1]} follow=false focus=false"
                     else
                         echo "desktop=$desktopNumber follow=false focus=false"
                     fi
@@ -149,7 +149,7 @@ case "$windowClass" in
             if [[ "${steamChat[0]}" == "true" ]]; then
                 echo "desktop=$desktopNumber split_dir=down split_ratio=0.5 window=${steamChat[1]}"
             elif [[ "${steamBase[0]}" == "true" ]]; then
-                echo "desktop=$desktopNumber split_dir=right split_ratio=0.7 window=${steamBase[1]}"
+                echo "desktop=$desktopNumber split_dir=right split_ratio=0.6 window=${steamBase[1]}"
             else
                 echo "desktop=$desktopNumber"
             fi
@@ -160,25 +160,86 @@ case "$windowClass" in
         windowRole=`getWindowRole "$windowID"`
         desktopNumber="^8"
 
-        if [[ -n "$windowRole" ]]; then
-            if [[ "$windowRole" =~ Conv* ]]; then
-                # Conversation window
-                echo "desktop=$desktopNumber split_dir=right split_ratio=0.2"
-            elif [[ "$windowRole" =~ Call* ]]; then
-                # Call window
-                echo "desktop=$desktopNumber split_dir=up split_ratio=0.4"
-            fi
-        else
-            if [[ "$windowName" =~ Opt* ]]; then
-                # Option window
-                echo "desktop=$desktopNumber floating=true"
-            elif [[ "$windowName" =~ Trans* ]]; then
-                # File transfert window
-                echo "desktop=$desktopNumber split_dir=down split_ratio=0.7"
+        skypeBase=("false" "")
+        skypeConv=("false" "")
+        skypeCall=("false" "")
+        skypeDL=("false" "")
+
+        # Determine which windows are already present
+        for otherID in `bspc query -W --desktop "$desktopNumber" | grep -v "$windowID"`; do
+            otherName=`getWindowName "$otherID"`
+            otherRole=`getWindowRole "$otherID"`
+
+            if [[ -n "$otherRole" ]]; then
+                case "$otherRole" in
+                    "Conv"*)
+                        skypeConv=("true" "$otherID")
+                        ;;
+                    "Call"*)
+                        skypeCall=("true" "$otherID")
+                        ;;
+                    *)
+                        ;;
+                esac
             else
-                # Default (contact) window
-                echo "desktop=$desktopNumber follow=false"
+                case "$otherName" in
+                    "Opt"*)
+                        ;;
+                    "Trans"*)
+                        skypeDL=("true" "$otherID")
+                        ;;
+                    *)
+                        skypeBase=("true" "$otherID")
+                        ;;
+                esac
             fi
+        done
+
+        # Place window
+        if [[ -n "$windowRole" ]]; then
+            case "$windowRole" in
+                "Conv"*)
+                    if [[ "${skypeCall[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.6 window=${skypeCall[1]}"
+                    elif [[ "${skypeBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber"
+                    fi
+                    ;;
+                "Call"*)
+                    if [[ "${skypeConv[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.6 window=${skypeConv[1]}"
+                    elif [[ "${skypeBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber"
+                    fi
+                    ;;
+                *)
+                    echo "desktop=$desktopNumber floating=true"
+                    ;;
+            esac
+        else
+            case "$windowName" in
+                "Opt"*)
+                    echo "desktop=$desktopNumber floating=true"
+                    ;;
+                "Trans"*)
+                    if [[ "${skypeBase[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.7 window=${skypeBase[1]}"
+                    else
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2"
+                    fi
+                    ;;
+                *)
+                    if [[ "${skypeDL[0]}" == "true" ]]; then
+                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.7 window=${skypeDL[1]}"
+                    else
+                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2"
+                    fi
+                    ;;
+            esac
         fi
         ;;
     *)

@@ -117,7 +117,7 @@ case "$windowClass" in
             case "$windowName" in
                 "Steam")
                     if [[ "${steamFriends[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.8 window=${steamFriends[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${steamFriends[1]} follow=false focus=false"
                     elif [[ "${mumbleBase[0]}" == "true" ]]; then
                         echo "desktop=$desktopNumber split_dir=left split_ratio=0.4 window=${mumbleBase[1]} follow=false focus=false"
                     else

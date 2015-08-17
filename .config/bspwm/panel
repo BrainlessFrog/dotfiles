@@ -19,7 +19,7 @@ PANEL_FONT_ONE="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1"
 PANEL_FONT_ONE_PANGO="Terminus 12"
 PANEL_FONT_TWO="-misc-stlarch-medium-r-normal-*-10-*-*-*-c-*-iso10646-*"
 PANEL_HEIGHT="24"
-SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
+#SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
 #PANEL_WIDTH=$((SCREEN_WIDTH-24))
 
 # Make dmenu use the same font and color
@@ -32,7 +32,7 @@ bspc config top_padding "$PANEL_HEIGHT"
 # Calling Bar
 # Part after bar is required for clickable areas
 panel_bar | lemonbar -p -u "2" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_ONE" -f "$PANEL_FONT_TWO" -F "#FF${COLOR_FOREGROUND}" -B "#FF${COLOR_BACKGROUND_DARK}" | while read line; do eval "$line"; done &
-stalonetray -bg "#${COLOR_BACKGROUND_DARK}" --geometry "1x1+$((SCREEN_WIDTH-250))+2" > /dev/null 2>&1 &
+stalonetray -bg "#${COLOR_BACKGROUND_DARK}" --geometry "1x1-5+2" > /dev/null 2>&1 &
 dunst -fn "$PANEL_FONT_ONE_PANGO" -lb "#${COLOR_BACKGROUND_DARK}" -nb "#${COLOR_BACKGROUND_DARK}" -cb "#${COLOR_BACKGROUND_DARK}" -lf "#${COLOR_FOREGROUND}" -nf "#${COLOR_FOREGROUND}" -cf "#${COLOR_FOREGROUND}" -to "10" -geometry "250"x"$((5*PANEL_HEIGHT))"-"0"+"$PANEL_HEIGHT" > /dev/null 2>&1 &
 
 wait

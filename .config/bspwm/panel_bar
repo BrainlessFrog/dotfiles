@@ -127,6 +127,26 @@ getNetwork() {
     fi
 }
 
+# Stalonetray
+getStalonetray() {
+    local textOut=""
+
+    if [[ "$(pgrep stalonetray)" ]]; then
+        local stID=`xdo id -N stalonetray | head -n 1`
+
+        local stWidth=`xprop -id "$stID" | grep 'user specified size' | cut -d ':' -f 2 | awk '{print $1}'`
+        local stInc=`xprop -id "$stID" | grep 'increment' | cut -d ':' -f 2 | awk '{print $1}'`
+        
+        if [[ "$stWidth" -ne 0 ]]; then
+            for i in `seq 1 $((stWidth / stInc))`; do
+                textOut="$textOut    "
+            done
+        fi
+    fi
+
+    echo "$textOut"
+}
+
 # Updates
 getUpdates() {
     local systemType="$1"
@@ -399,6 +419,6 @@ getWorkspace(){
 
 # Printing
 while true; do
-    $DESKTOP && echo -e "%{l} $(getUser)  $(getMoc)%{c}  $(getWorkspace --pacman --place)  %{r}$(getNetwork)  $(getUpdates -a)  $(getVolume -p 1 en)  $(getClock) " || echo -e "%{l} $(getUser)  $(getMoc)%{c}  $(getWorkspace --pacman --place)  %{r}$(getNetwork)  $(getUpdates -d)  $(getVolume -p 0 fr)  $(getBattery)  $(getClock) "
+    $DESKTOP && echo -e "%{l} $(getUser)  $(getMoc)%{c}  $(getWorkspace --pacman --place)  %{r}$(getNetwork)  $(getUpdates -a)  $(getVolume -p 1 en)  $(getClock) $(getStalonetray)" || echo -e "%{l} $(getUser)  $(getMoc)%{c}  $(getWorkspace --pacman --place)  %{r}$(getNetwork)  $(getUpdates -d)  $(getVolume -p 0 fr)  $(getBattery)  $(getClock) $(getStalonetray)"
     sleep 0.5;
 done

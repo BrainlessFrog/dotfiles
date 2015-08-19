@@ -200,7 +200,7 @@ case "$windowClass" in
             case "$windowRole" in
                 "Conv"*)
                     if [[ "${skypeCall[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.4 window=${skypeCall[1]}"
+                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.6 window=${skypeCall[1]}"
                     elif [[ "${skypeBase[0]}" == "true" ]]; then
                         echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
                     else
@@ -209,7 +209,7 @@ case "$windowClass" in
                     ;;
                 "Call"*)
                     if [[ "${skypeConv[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.6 window=${skypeConv[1]}"
+                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.4 window=${skypeConv[1]}"
                     elif [[ "${skypeBase[0]}" == "true" ]]; then
                         echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
                     else

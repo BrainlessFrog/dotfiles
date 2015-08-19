@@ -56,14 +56,14 @@ set! browser.showQuitWarning=true
 " Youtube HTML5
 set! media.mediasource.enabled=true
 set! media.mediasource.webm.enabled=true
-" set! media.mediasource.ignore_codecs=true
-" set! media.encoder.webm.enabled=true
-" set! media.fragmented-mp4.enabled=true
-" set! media.fragmented-mp4.exposed=true
-" set! media.fragmented-mp4.ffmpeg.enabled=true
-" set! media.fragmented-mp4.gmp.enabled=true
-" set! media.mediasource.mp4.enable=true
-" set! media.fragmented-mp4.use-blank-decoder=false
+set! media.mediasource.ignore_codecs=true
+set! media.encoder.webm.enabled=true
+set! media.fragmented-mp4.enabled=true
+set! media.fragmented-mp4.exposed=true
+set! media.fragmented-mp4.ffmpeg.enabled=true
+set! media.fragmented-mp4.gmp.enabled=true
+set! media.mediasource.mp4.enable=true
+set! media.fragmented-mp4.use-blank-decoder=false
 
 " Privacy settings
 set! browser.safebrowsing.enabled=false

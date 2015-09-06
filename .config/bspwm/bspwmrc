@@ -38,6 +38,7 @@ bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 # Rules
 bspc config external_rules_command $HOME/.config/bspwm/external_rules
 # Desktops
+bspc rule -a csgo_linux desktop=^5 floating=true follow=true focus=true
 bspc rule -a jd-Main desktop=^7 pseudo_tiled=true
 bspc rule -a JDownloader desktop=^7
 bspc rule -a Gimp desktop=^9 floating=true

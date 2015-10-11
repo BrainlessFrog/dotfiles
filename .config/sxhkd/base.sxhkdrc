@@ -11,7 +11,7 @@ super + t
 
 # Balance/Reset (in size) the desktop
 super + {_,shift +}b
-    bspc desktop -{B,E}
+    bspc desktop {-B,-E}
 
 # Toggle Fullscreen
 super + f

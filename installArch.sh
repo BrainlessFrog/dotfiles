@@ -28,6 +28,7 @@ conv="skype mumble"
 steam="steam steam-fonts"
 jdowloader="jre8-openjdk jdownloader2"
 terminal="moc zenity scrot screenfetch-git mps-youtube livestreamer htop"
+wine="wine wine_gecko wine-mono playonlinux samba lib32-libxml2"
 
 webcam="guvcview"
 printer="cups cups-pdf ghostscript gsfonts hplip system-config-printer"

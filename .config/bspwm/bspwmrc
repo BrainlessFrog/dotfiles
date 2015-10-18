@@ -60,5 +60,6 @@ compton &
 $DESKTOP && runDesktop || runLaptop
 $HOME/.config/bspwm/panel &
 glipper &
+seafile-applet &
 # 'Launch' nemo a first time, so it will launch faster after
 nemo -n &

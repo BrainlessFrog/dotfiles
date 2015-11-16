@@ -10,17 +10,10 @@ fi
 # Checking for previous errors
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
-# Sourcing colors:
+# Sourcing colors, configs and functions:
 # Variable return the code without '#', use '#${Var}' or '#FF${Var}'
-. panel_colors
-
-# Panel variables:
-PANEL_FONT_ONE="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1"
-PANEL_FONT_ONE_PANGO="Terminus 12"
-PANEL_FONT_TWO="-misc-stlarch-medium-r-normal-*-10-*-*-*-c-*-iso10646-*"
-PANEL_HEIGHT="24"
-#SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
-#PANEL_WIDTH=$((SCREEN_WIDTH-24))
+. panel_config
+. panel_functions
 
 # Make dmenu use the same font and color
 sed -i "s/dmenu_run.*$/dmenu_run -i -r -h \"$PANEL_HEIGHT\" -y \"$PANEL_HEIGHT\" -w \"250\" -q -l \"5\" -p \"> \" -fn \"$PANEL_FONT_ONE\" -nb \"\#${COLOR_BACKGROUND_DARK}\" -nf \"\#${COLOR_FOREGROUND}\" -sb \"\#${COLOR_BACKGROUND_BRIGHT}\" -sf \"\#${COLOR_TERM_BLUE_DARK}\"/g" "$HOME/.config/sxhkd/base.sxhkdrc"
@@ -29,10 +22,93 @@ pkill -USR1 -x sxhkd
 # Configuring bspwm
 bspc config top_padding "$PANEL_HEIGHT"
 
+# Delete old FIFO if it exist, and create a new one
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+# Determine on which computer the panel is running
+# According to hostname: $USER-desktop or $USER-laptop
+[[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
+$DESKTOP && LAPTOP=false || LAPTOP=true
+
+# Call functions
+# Battery
+$LAPTOP && while true; do
+    echo -e "BAT$(getBattery)"
+    sleep 60;
+done > "$PANEL_FIFO" &
+
+# Clock
+while true; do
+    echo -e "CLOCK$(getClock)"
+    sleep 20;
+done > "$PANEL_FIFO" &
+
+# Moc
+while true; do
+    echo -e "MOC$(getMoc)"
+    sleep 2;
+done > "$PANEL_FIFO" &
+
+# Network
+while true; do
+    echo -e "NET$(getNetwork)"
+    sleep 5;
+done > "$PANEL_FIFO" &
+
+# Stalonetray
+while true; do
+    echo -e "TRAY$(getStalonetray)"
+    sleep 1;
+done > "$PANEL_FIFO" &
+
+# Update
+while true; do
+    $DESKTOP && echo -e "UPDATE$(getUpdates -a)" || echo -e "UPDATE$(getUpdates -d)"
+    sleep 3600;
+done > "$PANEL_FIFO" &
+
+# User
+while true; do
+    echo -e "USER$(getUser)"
+    sleep 3600;
+done > "$PANEL_FIFO" &
+
+# Volume
+while true; do
+    $DESKTOP && echo -e "VOL$(getVolume -p 1 en)" || echo -e "VOL$(getVolume -p 0 fr)"
+    sleep 1;
+done > "$PANEL_FIFO" &
+
+# Workspace
+bspc control --subscribe > "$PANEL_FIFO" &
+
 # Calling Bar
 # Part after bar is required for clickable areas
-panel_bar | lemonbar -p -u "2" -g x"$PANEL_HEIGHT" -f "$PANEL_FONT_ONE" -f "$PANEL_FONT_TWO" -F "#FF${COLOR_FOREGROUND}" -B "#FF${COLOR_BACKGROUND_DARK}" | while read line; do eval "$line"; done &
-stalonetray -bg "#${COLOR_BACKGROUND_DARK}" --geometry "1x1-5+2" > /dev/null 2>&1 &
-dunst -fn "$PANEL_FONT_ONE_PANGO" -lb "#${COLOR_BACKGROUND_DARK}" -nb "#${COLOR_BACKGROUND_DARK}" -cb "#${COLOR_BACKGROUND_DARK}" -lf "#${COLOR_FOREGROUND}" -nf "#${COLOR_FOREGROUND}" -cf "#${COLOR_FOREGROUND}" -to "10" -geometry "250"x"$((5*PANEL_HEIGHT))"-"0"+"$PANEL_HEIGHT" > /dev/null 2>&1 &
+cat "$PANEL_FIFO" | panel_bar | lemonbar -p \
+    -u "2" \
+    -g x"$PANEL_HEIGHT" \
+    -f "$PANEL_FONT_ONE" \
+    -f "$PANEL_FONT_TWO" \
+    -F "#FF${COLOR_FOREGROUND}" \
+    -B "#FF${COLOR_BACKGROUND_DARK}" \
+    | while read line; do eval "$line"; done &
+
+stalonetray \
+    -bg "#${COLOR_BACKGROUND_DARK}" \
+    --geometry "1x1-5+2" \
+    > /dev/null 2>&1 &
+
+dunst \
+    -fn "$PANEL_FONT_ONE_PANGO" \
+    -lb "#${COLOR_BACKGROUND_DARK}" \
+    -nb "#${COLOR_BACKGROUND_DARK}" \
+    -cb "#${COLOR_BACKGROUND_DARK}" \
+    -lf "#${COLOR_FOREGROUND}" \
+    -nf "#${COLOR_FOREGROUND}" \
+    -cf "#${COLOR_FOREGROUND}" \
+    -to "10" \
+    -geometry "250"x"$((5*PANEL_HEIGHT))"-"0"+"$PANEL_HEIGHT" \
+    > /dev/null 2>&1 &
 
 wait

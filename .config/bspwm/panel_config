@@ -1,5 +1,5 @@
 #!/bin/bash
-# panel_colors - By BrainlessFrog
+# panel_coonfig - By BrainlessFrog
 
 # Command from wich extract the color scheme:
 #COLOR_COMMAND="cat .Xdefaults"
@@ -30,3 +30,14 @@ COLOR_TERM_FOREGROUND=`$COLOR_COMMAND | grep "foreground:" | cut -d '#' -f 2`
 COLOR_BACKGROUND_DARK="272727"
 COLOR_BACKGROUND_BRIGHT="34322E"
 COLOR_FOREGROUND="A3A6AB"
+
+# Panel variables:
+PANEL_FONT_ONE="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1"
+PANEL_FONT_ONE_PANGO="Terminus 12"
+PANEL_FONT_TWO="-misc-stlarch-medium-r-normal-*-10-*-*-*-c-*-iso10646-*"
+PANEL_HEIGHT="24"
+#SCREEN_WIDTH=`xrandr -q | grep 'Screen' | awk '{print $8}'`
+#PANEL_WIDTH=$((SCREEN_WIDTH-24))
+
+# Panel FIFO:
+PANEL_FIFO="/tmp/panel-fifo"

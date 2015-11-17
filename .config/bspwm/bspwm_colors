@@ -3,7 +3,7 @@
 
 # Sourcing colors:
 # Variable return the code without '#', use '#${Var}' or '#FF${Var}'
-. panel_colors
+. panel_config
 
 normalColor="#${COLOR_BACKGROUND_BRIGHT}"
 preselColor="#${COLOR_TERM_WHITE_BRIGHT}"

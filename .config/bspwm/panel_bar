@@ -16,10 +16,11 @@ while read -r line; do
             daMoc="${line#???}"
             ;;
         NET*)
-            daNet="${line#???}"
+            daNetwork="${line#???}"
             ;;
         TRAY*)
-            daTray="${line#????}"
+            #daTray="${line#????}"
+            daTray=`echo "${line#????}" | tr 'x' ' '`
             ;;
         UPDATE*)
             daUpdate="${line#??????}"
@@ -28,10 +29,10 @@ while read -r line; do
             daUser="${line#????}"
             ;;
         VOL*)
-            daVol="${line#???}"
+            daVolume="${line#???}"
             ;;
         W*)
-            daWorkspace=`getWorkspace "${line#?}" --pacman --place`
+            daWorkspace=`getWorkspace "${line}" --pacman --place`
             ;;
     esac
     echo -e "%{l}  ${daUser}  ${daMoc}%{c}  ${daWorkspace}  %{r}${daNetwork}  ${daUpdate}  ${daBattery}${daVolume}  ${daClock} ${daTray}"

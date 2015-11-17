@@ -34,49 +34,49 @@ $DESKTOP && LAPTOP=false || LAPTOP=true
 # Call functions
 # Battery
 $LAPTOP && while true; do
-    echo -e "BAT$(getBattery)"
+    echo "BAT$(getBattery)"
     sleep 60;
 done > "$PANEL_FIFO" &
 
 # Clock
 while true; do
-    echo -e "CLOCK$(getClock)"
+    echo "CLOCK$(getClock)"
     sleep 20;
 done > "$PANEL_FIFO" &
 
 # Moc
 while true; do
-    echo -e "MOC$(getMoc)"
+    echo "MOC$(getMoc)"
     sleep 2;
 done > "$PANEL_FIFO" &
 
 # Network
 while true; do
-    echo -e "NET$(getNetwork)"
+    echo "NET$(getNetwork)"
     sleep 5;
 done > "$PANEL_FIFO" &
 
 # Stalonetray
 while true; do
-    echo -e "TRAY$(getStalonetray)"
+    echo "TRAY$(getStalonetray)"
     sleep 1;
 done > "$PANEL_FIFO" &
 
 # Update
 while true; do
-    $DESKTOP && echo -e "UPDATE$(getUpdates -a)" || echo -e "UPDATE$(getUpdates -d)"
+    $DESKTOP && echo "UPDATE$(getUpdates -a)" || echo "UPDATE$(getUpdates -d)"
     sleep 3600;
 done > "$PANEL_FIFO" &
 
 # User
 while true; do
-    echo -e "USER$(getUser)"
+    echo "USER$(getUser)"
     sleep 3600;
 done > "$PANEL_FIFO" &
 
 # Volume
 while true; do
-    $DESKTOP && echo -e "VOL$(getVolume -p 1 en)" || echo -e "VOL$(getVolume -p 0 fr)"
+    $DESKTOP && echo "VOL$(getVolume -p 1 en)" || echo "VOL$(getVolume -p 0 fr)"
     sleep 1;
 done > "$PANEL_FIFO" &
 

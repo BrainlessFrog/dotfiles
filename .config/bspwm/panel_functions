@@ -21,16 +21,16 @@ getBattery() {
     fi
 
     if [[ "$status" == "Charging" ]]; then
-        echo -e "%{F$batteryColor}\uE041 %{F-}$level%%"
+        echo "%{F$batteryColor}\uE041 %{F-}$level%%"
     else
         if [[ "$level" -lt 10 ]]; then
-            echo -e "%{F$batteryColor}\uE038 %{F-}$level%%"
+            echo "%{F$batteryColor}\uE038 %{F-}$level%%"
         elif [[ "$level" -lt 41 ]]; then
-            echo -e "%{F$batteryColor}\uE039 %{F-}$level%%"
+            echo "%{F$batteryColor}\uE039 %{F-}$level%%"
         elif [[ "$level" -lt 71 ]]; then
-            echo -e "%{F$batteryColor}\uE03A %{F-}$level%%"
+            echo "%{F$batteryColor}\uE03A %{F-}$level%%"
         else
-            echo -e "%{F$batteryColor}\uE03B %{F-}$level%%"
+            echo "%{F$batteryColor}\uE03B %{F-}$level%%"
         fi
     fi
 }
@@ -40,7 +40,7 @@ getClock() {
     local currentTime=`date "+%H:%M"`
     local comStart='%{A1:notify-send -t 10 "$(date \"+%A %d %B\")" "$(cal)":}'
     local comStop="%{A}"
-    echo -e "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE015 %{F-}${currentTime}${comStop}"
+    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE015 %{F-}${currentTime}${comStop}"
 }
 
 # Moc
@@ -61,9 +61,9 @@ getMoc() {
                 #local mocPlay="%{A1:mocp -G:}`mocp -Q '%artist - %song'`%{A}"
                 ;;
         esac
-        echo -e "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE05C %{F-}${mocPlay}"
+        echo "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE05C %{F-}${mocPlay}"
     else
-        echo -e "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE05C %{F-}%{A1:urxvtc -e 'mocp':}Not running%{A}"
+        echo "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE05C %{F-}%{A1:urxvtc -e 'mocp':}Not running%{A}"
     fi
 }
 
@@ -96,7 +96,7 @@ getNetwork() {
     #Show connections :
     # Eth0
     if [[ "$int" == "eth0" ]]; then
-        $state && echo -e "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}$eth0" || echo -e "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}Disconnected"
+        $state && echo "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}$eth0" || echo "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}Disconnected"
     # Wifi
     else
         if [[ "$state" == "true" ]]; then
@@ -113,16 +113,16 @@ getNetwork() {
 
             local signal=$((reception*100 / total))
             if [[ "$signal" -lt 10 ]]; then
-                echo -e "%{F#FF${COLOR_TERM_RED_DARK}}\uE0EE %{F-}$essid"
+                echo "%{F#FF${COLOR_TERM_RED_DARK}}\uE0EE %{F-}$essid"
             elif [[ "$signal" -lt 41 ]]; then
-                echo -e "%{F#FF${COLOR_TERM_YELLOW_DARK}}\uE0EE %{F-}$essid"
+                echo "%{F#FF${COLOR_TERM_YELLOW_DARK}}\uE0EE %{F-}$essid"
             elif [[ "$signal" -lt 71 ]]; then
-                echo -e "%{F#FF${COLOR_TERM_GREEN_BRIGHT}}\uE0EF %{F-}$essid"
+                echo "%{F#FF${COLOR_TERM_GREEN_BRIGHT}}\uE0EF %{F-}$essid"
             else
-                echo -e "%{F#FF${COLOR_TERM_GREEN_DARK}}\uE0F0 %{F-}$essid"
+                echo "%{F#FF${COLOR_TERM_GREEN_DARK}}\uE0F0 %{F-}$essid"
             fi
         else
-            echo -e "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}Disconnected"
+            echo "%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0F0 %{F-}Disconnected"
         fi
     fi
 }
@@ -139,7 +139,7 @@ getStalonetray() {
         
         if [[ "$stWidth" -ne 0 ]]; then
             for i in `seq 1 $((stWidth / stInc))`; do
-                textOut="$textOut    "
+                textOut="${textOut}xxxx"
             done
         fi
     fi
@@ -176,14 +176,14 @@ getUpdates() {
     else
         local updateColor="#FF${COLOR_TERM_YELLOW_DARK}"
     fi
-    echo -e "${comStart}%{F$updateColor}\uE00F %{F-}${number}${comStop}"
+    echo "${comStart}%{F$updateColor}\uE00F %{F-}${number}${comStop}"
 }
 
 # User
 getUser() {
     local comStart="%{A1:bspwm-logout.sh > /dev/null 2>&1:}"
     local comStop="%{A}"
-    echo -e "${comStart}%{F#FF${COLOR_TERM_CYAN_DARK}}\uE00E %{F-}${USER}@${HOSTNAME}${comStop}"
+    echo "${comStart}%{F#FF${COLOR_TERM_CYAN_DARK}}\uE00E %{F-}${USER}@${HOSTNAME}${comStop}"
 }
 
 # Volume
@@ -227,14 +227,14 @@ getVolume() {
     # Return
     if [[ "$volStatus" == "on" ]] || [[ "$volStatus" == "no" ]]; then
         if [[ "$volLevel" -lt 11 ]];then
-            echo -e "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE051 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE051 %{F-}$volLevel%%${comStop}"
         elif [[ "$volLevel" -lt 51 ]]; then
-            echo -e "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE053 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE053 %{F-}$volLevel%%${comStop}"
         else
-            echo -e "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE152 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE152 %{F-}$volLevel%%${comStop}"
         fi
     else
-        echo -e "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE052 %{F-}Mute${comStop}"
+        echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE052 %{F-}Mute${comStop}"
     fi
 }
 
@@ -243,14 +243,14 @@ getVolume() {
 # Workspace
 getWorkspace(){
     # Default variables
+    local fifoInput="$1"
     local outputType="$2"
     local colorType="$3"
     local colorTemp="0"
 
     # Desktop variables
     local totalDesktop=`xprop -root _NET_NUMBER_OF_DESKTOPS | awk '{print $3}'`
-    local currentStatus="$1"
-    #local currentStatus=`bspc control --get-status | cut -d ':' -f "2-$((totalDesktop+1))"`
+    local currentStatus=`echo "$fifoInput" | cut -d ':' -f "2-$((totalDesktop+1))"`
 
     local textOut=" "
     for i in `seq 1 $totalDesktop`; do
@@ -411,5 +411,5 @@ getWorkspace(){
                 ;;
         esac
     done
-    echo -e "$textOut"
+    echo "$textOut"
 }

@@ -4,6 +4,8 @@
 # By BrainlessFrog
 # Modified from: https://github.com/mplacona/dotfiles/blob/master/bootstrap.sh
 
+#TODO: correct folder saving
+
 OLDIFS="$IFS"
 IFS="
 "

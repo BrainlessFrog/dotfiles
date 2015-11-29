@@ -2,10 +2,11 @@
 # Install Archlinux packages
 # By BrainlessFrog
 
-# TODO: finish it...
+# TODO: test it...
 
 # Initialize variable
 packetsList=""
+fullInstall=""
 
 # Base packages
 base="vim tmux bash-completion ntp"
@@ -33,10 +34,52 @@ wine="wine wine_gecko wine-mono playonlinux samba lib32-libxml2"
 webcam="guvcview"
 printer="cups cups-pdf ghostscript gsfonts hplip system-config-printer"
 razer="razercfg-git python-pyside evhz-git"
-wifi=""
+wifi="broadcom-wl-dkms"
+xbacklight="xbacklight"
 
-# Choise packages
+askPackage() {
+    local package="$1"
+    local result="Y"
+    local reply="true"
+    
+    read -e -p "Do you want to install the $package package? Y/n " result
+    if [[ "$result" == "N" ]] || [[ "$result" == "n" ]]; then
+        reply=false
+    fi
 
+    echo "$reply"
+}
+
+# Choose packages
+read -e -p "Would you like to make a complete installation? N/d(esktop)/l(aptop) " fullInstall
+if [[ "$fullInstall" == "d" ]] || [[ "$fullInstall" == "desktop" ]]; then
+    packetsList="$base $xorg $nvidia $pulseaudio $bspwm $lxappearance $fonts $nemo $files $firefox $thunderbird $libreoffice $conv $steam $jdowloader $terminal $wifi $webcam $printer $razer"
+elif [[ "$fullInstall" == "l" ]] || [[ "$fullInstall" == "laptop" ]]; then
+    packetsList="$base $xorg $pulseaudio $bspwm $lxappearance $fonts $nemo $files $firefox $thunderbird $libreoffice $conv $steam $jdowloader $terminal $wifi $webcam $printer $wifi $xbacklight"
+else
+    askPackage base && packetsList="${packetsList}${base} "
+    askPackage xorg && packetsList="${packetsList}${xorg} "
+    askPackage nvidia && packetsList="${packetsList}${nvidia} "
+    askPackage pulseaudio && packetsList="${packetsList}${pulseaudio} "
+    askPackage bspwm && packetsList="${packetsList}${bspwm} "
+    askPackage lxappearance && packetsList="${packetsList}${lxappearance} "
+    askPackage fonts && packetsList="${packetsList}${fonts} "
+    askPackage nemo && packetsList="${packetsList}${nemo} "
+    askPackage files && packetsList="${packetsList}${files} "
+    askPackage firefox && packetsList="${packetsList}${firefox} "
+    askPackage thunderbird && packetsList="${packetsList}${thunderbird} "
+    askPackage libreoffice && packetsList="${packetsList}${libreoffice} "
+    askPackage conv && packetsList="${packetsList}${conv} "
+    askPackage steam && packetsList="${packetsList}${steam} "
+    askPackage jdowloader && packetsList="${packetsList}${jdowloader} "
+    askPackage terminal && packetsList="${packetsList}${terminal} "
+    askPackage wine && packetsList="${packetsList}${wine} "
+    askPackage webcam && packetsList="${packetsList}${webcam} "
+    askPackage printer && packetsList="${packetsList}${printer} "
+    askPackage razer && packetsList="${packetsList}${razer} "
+    askPackage wifi && packetsList="${packetsList}${wifi} "
+    askPackage xbacklight && packetsList="${packetsList}${xbacklight} "
+fi
 
 # Add archlinuxfr repo (required for an easier yaourt install)
 sudo echo '' >> /etc/pacman.conf

@@ -3,8 +3,6 @@
 # By BrainlessFrog
 # Modified from: https://github.com/mplacona/dotfiles/blob/master/bootstrap.sh
 
-#TODO: correct folder saving
-
 OLDIFS="$IFS"
 IFS="
 "
@@ -146,6 +144,7 @@ for file in $filesList; do
         echo ""
     elif [[ -e "${HOME}/${file}" ]]; then
         echo "Backing $file up ..."
+        mkdir -p "${backDir}/${currentDate}/${file%/*}"
         mv "${HOME}/${file}" "${backDir}/${currentDate}/${file}"
         echo "... done."
         echo ""

@@ -4,8 +4,6 @@
 # By BrainlessFrog
 # Modified from: https://github.com/mplacona/dotfiles/blob/master/bootstrap.sh
 
-#TODO: correct folder saving
-
 OLDIFS="$IFS"
 IFS="
 "
@@ -39,10 +37,12 @@ echo ""
 for file in $filesList; do
     if [[ -e "${HOME}/${file}" ]]; then
         echo "Backing $file up ..."
+        mkdir -p "${backDir}/${currentDate}/${file%/*}"
         mv "${HOME}/${file}" "${backDir}/${currentDate}/${file}"
         echo "... done."
         echo ""
     fi
+
     echo "Copying $file ..."
     cp "${dotDir}/${file}" "${HOME}/${file}"
     echo "... done."

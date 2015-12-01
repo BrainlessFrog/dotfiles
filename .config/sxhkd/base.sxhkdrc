@@ -99,7 +99,7 @@ super + Down
 
 # Hide current window
 super + shift + Down
-    $HOME/.scripts/window_hide.sh
+    $HOME/.scripts/window_hide.sh hide
 
 # Raise/Lower window gap
 super + {KP_Add,KP_Subtract}

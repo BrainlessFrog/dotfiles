@@ -44,6 +44,12 @@ while true; do
     sleep 20;
 done > "$PANEL_FIFO" &
 
+# Hidden
+while true; do
+    echo "HIDDEN$(getHidden)"
+    sleep 5;
+done > "$PANEL_FIFO" &
+
 # Moc
 while true; do
     echo "MOC$(getMoc)"

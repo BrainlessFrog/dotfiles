@@ -95,4 +95,4 @@ sudo pacman -S yaourt
 yaourt -Syyua
 
 # Install packages
-yaourt -S "$packetsList"
+yaourt -S $packetsList

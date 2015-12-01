@@ -40,7 +40,17 @@ getClock() {
     local currentTime=`date "+%H:%M"`
     local comStart='%{A1:notify-send -t 10 "$(date \"+%A %d %B\")" "$(cal)":}'
     local comStop="%{A}"
+
     echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE015 %{F-}${currentTime}${comStop}"
+}
+
+# Hidden windows
+getHidden() {
+    local hiddenNumber=`window_hide.sh list --number`
+    local comStart='%{A1:notify-send -t 10 "$(window_hide.sh list -n)":}%{A3:window_hide.sh dmenu -i -r -h "$PANEL_HEIGHT"y "$PANEL_HEIGHT" -w "250" -q -l "5" -p "> " -fn "$PANEL_FONT_ONE" -nb "#${COLOR_BACKGROUND_DARK}" -nf "#{COLOR_FOREGROUND}" -sb "#${COLOR_BACKGROUND_BRIGHT" -sf "#${COLOR_TERM_BLUE_DARK}":}'
+    local comStop="%{A}%{A}"
+
+    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0B1 %{F-}${hiddenNumber}${comStop}"
 }
 
 # Moc

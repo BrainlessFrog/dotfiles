@@ -97,6 +97,10 @@ super + ctrl + {h,j,k,l}
 super + Down
     bspc control --toggle-visibility
 
+# Hide current window
+super + shift + Down
+    $HOME/.scripts/window_hide.sh
+
 # Raise/Lower window gap
 super + {KP_Add,KP_Subtract}
     bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2))

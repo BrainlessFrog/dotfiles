@@ -12,6 +12,9 @@ while read -r line; do
         CLOCK*)
             daClock="${line#?????}"
             ;;
+        HIDDEN*)
+            daHidden="${line#??????}"
+            ;;
         MOC*)
             daMoc="${line#???}"
             ;;
@@ -35,5 +38,5 @@ while read -r line; do
             daWorkspace=`getWorkspace "${line}" --pacman --place`
             ;;
     esac
-    echo -e "%{l}  ${daUser}  ${daMoc}%{c}  ${daWorkspace}  %{r}${daNetwork}  ${daUpdate}  ${daBattery}${daVolume}  ${daClock} ${daTray}"
+    echo -e "%{l}  ${daUser}  ${daHidden}  ${daMoc}%{c}  ${daWorkspace}  %{r}${daNetwork}  ${daUpdate}  ${daBattery}${daVolume}  ${daClock} ${daTray}"
 done

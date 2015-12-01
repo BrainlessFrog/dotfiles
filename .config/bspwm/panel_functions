@@ -356,7 +356,7 @@ getWorkspace(){
                 ;;
             "--invaders")
                 # Invaders
-                local occupiedFocused="%{F#FF${COLOR_TERM_YELLOW_BRIGHT}}\uE19D%{F-}"
+                local occupiedFocused="%{F#FF${COLOR_TERM_YELLOW_BRIGHT}}\uE00E%{F-}"
                 #local occupiedUnfocused="%{F#FF${COLOR_TERM_MAGENTA_BRIGHT}}\uE19D%{F-}"
                 local unoccupiedFocused="%{F#FF${COLOR_TERM_BLUE_DARK}}\u2022%{F-}"
                 local unoccupiedUnfocused="%{F#FF${COLOR_TERM_WHITE_DARK}}\u2022%{F-}"

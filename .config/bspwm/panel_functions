@@ -50,7 +50,7 @@ getHidden() {
     local comStart='%{A1:notify-send -t 10 "$(window_hide.sh list -n)":}%{A3:window_hide.sh dmenu -i -r -h "$PANEL_HEIGHT" -y "$PANEL_HEIGHT" -w "250" -q -l "5" -p "> " -fn "$PANEL_FONT_ONE" -nb "#$COLOR_BACKGROUND_DARK" -nf "#$COLOR_FOREGROUND" -sb "#$COLOR_BACKGROUND_BRIGHT" -sf "#$COLOR_TERM_BLUE_DARK":}'
     local comStop="%{A}%{A}"
 
-    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE0B1 %{F-}${hiddenNumber}${comStop}"
+    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}%{T2}\uE0B1%{T-} %{F-}${hiddenNumber}${comStop}"
 }
 
 # Moc

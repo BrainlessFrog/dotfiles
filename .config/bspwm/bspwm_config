@@ -1,0 +1,123 @@
+#!/bin/bash
+# bspwm_config - By BrainlessFrog
+
+# Default variables
+COLORS=false
+CONFIG=false
+APPS=false
+
+# Sourcing colors:
+# Variable return the code without '#', use '#${Var}' or '#FF${Var}'
+. panel_config
+
+# Determine on which computer bspwm is running
+# According to hostname: $USER-desktop or $USER-laptop
+[[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
+
+setColors() {
+    local normalColor="#${COLOR_BACKGROUND_BRIGHT}"
+    local preselColor="#${COLOR_TERM_WHITE_BRIGHT}"
+    local defaultColor="#${COLOR_TERM_YELLOW_DARK}"
+    local lockedColor="#${COLOR_TERM_BLUE_DARK}"
+    local stickyColor="#${COLOR_TERM_MAGENTA_DARK}"
+    local privateColor="#${COLOR_TERM_CYAN_DARK}"
+    local urgentColor="#${COLOR_TERM_RED_DARK}"
+
+    bspc config focused_border_color "$defaultColor"
+    bspc config active_border_color "$defaultColor"
+    bspc config normal_border_color "$normalColor"
+
+    bspc config presel_border_color "$preselColor"
+
+    bspc config focused_locked_border_color "$lockedColor"
+    bspc config active_locked_border_color "$lockedColor"
+    bspc config normal_locked_border_color "$normalColor"
+
+    bspc config focused_sticky_border_color "$stickyColor"
+    bspc config active_sticky_border_color "$stickyColor"
+    bspc config normal_sticky_border_color "$normalColor"
+
+    bspc config focused_private_border_color "$privateColor"
+    bspc config active_private_border_color "$privateColor"
+    bspc config normal_private_border_color "$normalColor"
+
+    bspc config urgent_border_color "$urgentColor"
+}
+
+setConfig() {
+    # Config
+    bspc config border_width          2
+    bspc config window_gap            12
+    bspc config split_ratio           0.50
+    bspc config borderless_monocle    true
+    bspc config gapless_monocle       true
+    bspc config focus_by_distance     true
+    #bspc config pointer_follows_focus true
+    bspc config focus_follows_pointer true
+    bspc config initial_polarity      second_child
+    bspc config center_pseudo_tiled   true
+    bspc config auto_cancel           true
+    #bspc config auto_alternate        true
+    bspc config ignore_ewmh_focus     true
+
+    # Monitor
+    bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+
+    # Rules
+    bspc config external_rules_command $HOME/.config/bspwm/external_rules
+    # Desktops
+    bspc rule -a csgo_linux desktop=^5 floating=true follow=true focus=true
+    bspc rule -a jd-Main desktop=^7 pseudo_tiled=true
+    bspc rule -a JDownloader desktop=^7
+    bspc rule -a Gimp desktop=^9 floating=true
+    # Floating
+    bspc rule -a vlc floating=true center=true
+    bspc rule -a file-roller floating=true center=true
+    bspc rule -a nitrogen floating=true center=true
+    bspc rule -a gcolor2 floating=true center=true
+    bspc rule -a lxappearance floating=true center=true
+    bspc rule -a nvidia-settings floating=true center=true
+    bspc rule -a pavucontrol floating=true center=true
+}
+
+setAutostart() {
+    gsettings set org.nemo.desktop show-desktop-icons false &
+    gsettings set org.cinnamon.desktop.default-applications.terminal exec urxvtc &
+    xscreensaver -nosplash &
+    nitrogen --restore &
+    compton &
+
+    if [[ "$DESKTOP" == "true" ]]; then
+        $HOME/.scripts/disableAccel.sh &
+        conky -c .conkyrc_desktop &
+    else
+        $HOME/.scripts/setSynclient.sh &
+        conky -c .conkyrc_laptop &
+    fi
+
+    $HOME/.config/bspwm/panel &
+    glipper &
+    seafile-applet &
+    # 'Launch' nemo a first time, so it will launch faster after
+    nemo -n &
+}
+
+for arg in "$@"; do
+    case "$arg" in
+        "--colors")
+            COLORS=true
+            ;;
+        "--config")
+            CONFIG=true
+            ;;
+        "--apps")
+            APPS=true
+            ;;
+        *)
+            ;;
+    esac
+done
+
+$COLORS && setColors
+$CONFIG && setConfig
+$APPS && setAutostart

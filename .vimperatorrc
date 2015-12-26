@@ -72,7 +72,9 @@ set! browser.send_pings=false
 set! browser.send_pings.max_per_link=0
 set! datareporting.healthreport.uploadEnabled=false
 set! dom.event.clipboardevents.enabled=false
-set! dom.storage.enabled=false
+" Required for RES
+" set! dom.storage.enabled=false
+set! dom.storage.enabled=true
 set! geo.enabled=false
 " set! network.cookie.cookieBehavior=1
 " set! network.cookie.lifetimePolicy=2

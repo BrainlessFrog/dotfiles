@@ -30,9 +30,6 @@ filesList="
 .tmux.conf
 .vim/colors
 .vim/filetype.vim
-.vim/ftdetect
-.vim/spell
-.vim/syntax
 .vim/templates
 .vimperator/colors
 .vimperatorrc

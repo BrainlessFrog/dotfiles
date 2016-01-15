@@ -23,7 +23,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'terryma/vim-multiple-cursors'
-Plugin 'ctrlpvim/ctrlp'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " Syntax
 Plugin 'baskerville/vim-sxhkdrc'

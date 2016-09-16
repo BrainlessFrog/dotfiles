@@ -67,17 +67,17 @@ case "$windowClass" in
                 echo "desktop=$desktopNumber"
             elif [[ "$windowRole" =~ Msgc* ]]; then
                 # Message window
-                echo "desktop=$desktopNumber split_dir=down split_ratio=0.4"
+                echo "desktop=$desktopNumber split_dir=south split_ratio=0.4"
             elif [[ "$windowRole" =~ addr* ]]; then
                 # Contact window
-                echo "desktop=$desktopNumber split_dir=left split_ratio=0.3"
+                echo "desktop=$desktopNumber split_dir=west split_ratio=0.3"
             else
                 # Others
-                echo "desktop=$desktopNumber floating=true"
+                echo "desktop=$desktopNumber state=floating"
             fi
         else
             # Others
-            echo "desktop=$desktopNumber floating=true"
+            echo "desktop=$desktopNumber state=floating"
         fi
         ;;
     "Steam"|"Mumble")
@@ -91,7 +91,7 @@ case "$windowClass" in
         mumbleBase=("false" "")
 
         # Determine which windows are already present
-        for otherID in `bspc query -W --desktop "$desktopNumber" | grep -v "$windowID"`; do
+        for otherID in `bspc query -N --desktop "$desktopNumber" | grep -v "$windowID"`; do
             otherName=`getWindowName "$otherID"`
             case "$otherName" in
                 "Steam")
@@ -117,39 +117,39 @@ case "$windowClass" in
             case "$windowName" in
                 "Steam")
                     if [[ "${steamFriends[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${steamFriends[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=east split_ratio=0.2 window=${steamFriends[1]} follow=false focus=false"
                     elif [[ "${mumbleBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.4 window=${mumbleBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=west split_ratio=0.4 window=${mumbleBase[1]} follow=false focus=false"
                     else
                         echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 "Friends"|"Amis")
                     if [[ "${steamBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2 window=${steamBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=west split_ratio=0.2 window=${steamBase[1]} follow=false focus=false"
                     else
                         echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 *"Chat")
                     if [[ "${mumbleBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.5 window=${mumbleBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=north split_ratio=0.5 window=${mumbleBase[1]} follow=false focus=false"
                     elif [[ "${steamBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.6 window=${steamBase[1]} follow=false focus=false"
+                        echo "desktop=$desktopNumber split_dir=east split_ratio=0.6 window=${steamBase[1]} follow=false focus=false"
                     else
                         echo "desktop=$desktopNumber follow=false focus=false"
                     fi
                     ;;
                 *)
-                    echo "desktop=$desktopNumber floating=true"
+                    echo "desktop=$desktopNumber state=floating"
                     ;;
             esac
         else
         # Mumble
             if [[ "${steamChat[0]}" == "true" ]]; then
-                echo "desktop=$desktopNumber split_dir=down split_ratio=0.5 window=${steamChat[1]}"
+                echo "desktop=$desktopNumber split_dir=south split_ratio=0.5 window=${steamChat[1]}"
             elif [[ "${steamBase[0]}" == "true" ]]; then
-                echo "desktop=$desktopNumber split_dir=right split_ratio=0.6 window=${steamBase[1]}"
+                echo "desktop=$desktopNumber split_dir=east split_ratio=0.6 window=${steamBase[1]}"
             else
                 echo "desktop=$desktopNumber"
             fi
@@ -200,43 +200,43 @@ case "$windowClass" in
             case "$windowRole" in
                 "Conv"*)
                     if [[ "${skypeCall[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.4 window=${skypeCall[1]}"
+                        echo "desktop=$desktopNumber split_dir=south split_ratio=0.4 window=${skypeCall[1]}"
                     elif [[ "${skypeBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=east split_ratio=0.2 window=${skypeBase[1]}"
                     else
                         echo "desktop=$desktopNumber"
                     fi
                     ;;
                 "Call"*)
                     if [[ "${skypeConv[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.4 window=${skypeConv[1]}"
+                        echo "desktop=$desktopNumber split_dir=north split_ratio=0.4 window=${skypeConv[1]}"
                     elif [[ "${skypeBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=right split_ratio=0.2 window=${skypeBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=east split_ratio=0.2 window=${skypeBase[1]}"
                     else
                         echo "desktop=$desktopNumber"
                     fi
                     ;;
                 *)
-                    echo "desktop=$desktopNumber floating=true"
+                    echo "desktop=$desktopNumber state=floating"
                     ;;
             esac
         else
             case "$windowName" in
                 "Opt"*)
-                    echo "desktop=$desktopNumber floating=true"
+                    echo "desktop=$desktopNumber state=floating"
                     ;;
                 "Trans"*)
                     if [[ "${skypeBase[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=down split_ratio=0.7 window=${skypeBase[1]}"
+                        echo "desktop=$desktopNumber split_dir=south split_ratio=0.7 window=${skypeBase[1]}"
                     else
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2"
+                        echo "desktop=$desktopNumber split_dir=west split_ratio=0.2"
                     fi
                     ;;
                 *)
                     if [[ "${skypeDL[0]}" == "true" ]]; then
-                        echo "desktop=$desktopNumber split_dir=up split_ratio=0.3 window=${skypeDL[1]}"
+                        echo "desktop=$desktopNumber split_dir=north split_ratio=0.3 window=${skypeDL[1]}"
                     else
-                        echo "desktop=$desktopNumber split_dir=left split_ratio=0.2"
+                        echo "desktop=$desktopNumber split_dir=west split_ratio=0.2"
                     fi
                     ;;
             esac

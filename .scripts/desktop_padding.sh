@@ -29,8 +29,8 @@ usage() {
 	echo "	 -l, --left    	                  - change desktop padding of the left side"
 	echo "	 -p, --positive	                  - increase desktop padding"
 	echo "	 -n, --negative                   - decrease desktop padding"
-	echo "	 -t, --toggle [half, -s]          - toggle desktop padding"
-	echo "	 -s                               - number of pixels to move"
+	echo "	 -t, --toggle [half, px]          - toggle desktop padding"
+	echo "	 -s, --size [px]                  - number of pixels to move"
 	echo "	 -h, --help                       - display this"
 }
 
@@ -39,47 +39,78 @@ if [[ "$#" -eq 0 ]] ; then
 	exit 1;
 fi
 
-for i in "$@"; do
-	case "$i" in
+ARGS=`getopt -o audrlp:n:t:s:h \
+             -l all,up,down,right,left,positive:,negative:,toggle:,size:,help \
+             -n "$0" \
+             -- "$@"`
+
+eval set -- "$ARGS"
+
+while true; do
+    case "$1" in
 		"-a"|"--all")
             UP=true
             DOWN=true
             RIGHT=true
             LEFT=true
+            shift
 			;;
 		"-u"|"--up")
             UP=true
+            shift
 			;;
 		"-d"|"--down")
 			DOWN=true
+            shift
 			;;
 		"-r"|"--right")
 			RIGHT=true
+            shift
 			;;
 		"-l"|"--left")
 			LEFT=true
+            shift
 			;;
 		"-p"|"--positive")
 			POSITIVE=true
+            shift
 			;;
 		"-n"|"--negative")
 			POSITIVE=false
+            shift
 			;;
 		"-t"|"--toggle")
 			TOGGLE=true
+            if [[ "$2" == "half" ]]; then
+                HALF=true
+                shift 2
+            else
+			    SIZE="$2"
+			    if [[ -z `echo "$SIZE" | sed -e "s#[0-9]##g"` ]]; then
+                    shift 2
+                else
+                    err "Wrong argument! Use either 'half' or a number of pixels"
+                fi
+            fi
 			;;
-		"half")
-			HALF=true
-			;;
-		"-s")
-			SIZE=`echo $@ | sed 's/.*-s \([0-9]*\).*/\1/'`
-			[[ "$SIZE" == "$@" ]] && err "Must specify number of pixels"
+		"-s"|"--size")
+			SIZE="$2"
+			if [[ -z `echo "$SIZE" | sed -e "s#[0-9]##g"` ]]; then
+                shift 2
+            else
+                err "Wrong argument! Use either 'half' or a number of pixels"
+            fi
 			;;
 		""|"-h"|"--help")
 			usage
 			exit 0;
 			;;
+        --)
+            shift
+            break
+            ;;
 		*)
+            err "Internal error!"
 			;;
 	esac
 done

@@ -141,14 +141,12 @@ alias vmi='vim'
 alias bye='sudo shutdown -h now'
 alias cya='sudo shutdown -r now'
 
-# Apt aliases
-alias psearch='sudo apt-cache search'
-alias pinstall='sudo apt-get install'
-alias pupdate='sudo apt-get update'
-alias pupgrade='sudo apt-get upgrade'
-alias puptot='sudo apt-get update && sudo apt-get upgrade'
-alias premove='sudo apt-get remove'
-alias paremove='sudo apt-get autoremove'
+# Pacman aliases
+alias pacsearch='sudo pacman -Ss'
+alias pacinstall='sudo pacman -S'
+alias pacupdapte='sudo pacman -Syu'
+alias pacupforce='sudo pacman -Syyu'
+alias pacremove='sudo pacman -Rs'
 
 # Git aliases
 alias gadd='git add'

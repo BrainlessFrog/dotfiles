@@ -1,6 +1,6 @@
 #!/bin/bash
 # Move all types of windows in Bspwm
-# Modified by BrainlessFrog from: https://github.com/windelicato/dotfiles/blob/master/scripts/window_move.sh
+# By BrainlessFrog
 
 # Dependencies: Bspwm and Xdo
 
@@ -19,56 +19,79 @@ usage() {
 	echo "Options:"
 	echo "	 -p, --positive	      - move in positively (right/up)"
 	echo "	 -n, --negative       - move in negatively (left/down)"
-	echo "	 -x, --xdir           - move in x direction (left/right"
+    echo "	 -x, --xdir           - move in x direction (left/right)"
 	echo "	 -y, --ydir           - move in y dir (up/down)"
-	echo "	 -s                   - number of pixels to move"
+	echo "	 -s, --size [px]      - number of pixels to move"
 	echo "	 -h, --help           - display this"
 }
 
-if [[ "$#" -eq 0 ]] ; then
+if [[ "$#" -eq 0 ]]; then
 	usage
 	exit 1;
 fi
 
-for i in "$@"; do
-	case "$i" in
+ARGS=`getopt -o pnxys:h \
+             -l positive,negative,xdir,ydir,size:,help \
+             -n "$0" \
+             -- "$@"`
+
+eval set -- "$ARGS"
+
+while true; do
+	case "$1" in
 		"-p"|"--positive")
 			POSITIVE=true
+            shift
 			;;
 		"-n"|"--negative")
 			POSITIVE=false
+            shift
 			;;
 		"-x"|"--xdir")
 			HORIZONTAL=true
+            shift
 			;;
 		"-y"|"--ydir")
 			HORIZONTAL=false
+            shift
 			;;
-		"-s")
-			SIZE=`echo "$@" | sed 's/.*-s \([0-9]*\).*/\1/'`
-			[[ "$SIZE" == "$@" ]] && err "Must specify number of pixels"
+		"-s"|"--size")
+			SIZE="$2"
+			if [[ -z `echo "$SIZE" | sed -e "s#[0-9]##g"` ]]; then
+                shift 2
+            else
+                err "Wrong argument! Use either 'half' or a number of pixels"
+            fi
 			;;
 		""|"-h"|"--help")
 			usage
 			exit 0;
 			;;
+        --)
+            shift
+            break
+            ;;
 		*)
+            err "Internal error!"
 			;;
 	esac
 done
 
 # Find current window mode
-WINDOW_STATUS=`bspc query -T -w | awk '/^.* [a-zA-Z\-]{8} \*$/{print $8}'`
+WINDOW_STATUS=`bspc query -T -n | awk '/^.* [a-zA-Z\-]{8} \*$/{print $8}'`
 FLAGS=`echo "$WINDOW_STATUS" | sed 's/-//g'`
 
 if [[ "$FLAGS" =~ ^.*f.*$ ]]; then
 # The window is floating, move it
-	$HORIZONTAL && switch="-x" || switch="-y"
+	#$HORIZONTAL && switch="-x" || switch="-y"
+	#$POSITIVE && sign="+" || sign="-"
+	#xdo move ${switch} ${sign}${SIZE}
 	$POSITIVE && sign="+" || sign="-"
-	xdo move ${switch} ${sign}${SIZE}
+	$HORIZONTAL && move="${sign}${SIZE} 0" || move="0 ${sign}${SIZE}"
+    bspc node -v ${move}
 else
     # The window is (pseudo)tiled, move it into the preselection, or swap it 
-	$HORIZONTAL && switch=("right" "left") || switch=("down" "up")
+	$HORIZONTAL && switch=("east" "west") || switch=("south" "north")
     $POSITIVE && sign="0" || sign="1"
-    bspc window -w ${switch[${sign}]}.manual || bspc window -s ${switch[${sign}]}
+    bspc node -n ${switch[${sign}]}.!automatic || bspc node -s ${switch[${sign}]}
 fi

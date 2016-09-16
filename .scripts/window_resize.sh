@@ -1,6 +1,6 @@
 #!/bin/bash
 # Resize all types of windows in Bspwm
-# Modified by BrainlessFrog from: https://github.com/windelicato/dotfiles/blob/master/scripts/window_move.sh
+# By BrainlessFrog
 
 # Dependencies: Bspwm and Xdo
 
@@ -21,7 +21,7 @@ usage() {
 	echo "	 -n, --negative       - resize in negatively"
 	echo "	 -x, --xdir           - resize in x direction"
 	echo "	 -y, --ydir           - resize in y dir"
-	echo "	 -s                   - number of pixels to resize"
+	echo "	 -s, --size [px]      - number of pixels to resize"
 	echo "	 -h, --help           - display this"
 }
 
@@ -30,35 +30,55 @@ if [[ "$#" -eq 0 ]] ; then
 	exit 1;
 fi
 
-for i in "$@"; do
-	case "$i" in
+ARGS=`getopt -o pnxys:h \
+             -l positive,negative,xdir,ydir,size:,help \
+             -n "$0" \
+             -- "$@"`
+
+eval set -- "$ARGS"
+
+while true; do
+	case "$1" in
 		"-p"|"--positive")
 			POSITIVE=true
+            shift
 			;;
 		"-n"|"--negative")
 			POSITIVE=false
+            shift
 			;;
 		"-x"|"--xdir")
 			HORIZONTAL=true
+            shift
 			;;
 		"-y"|"--ydir")
 			HORIZONTAL=false
+            shift
 			;;
-		"-s")
-			SIZE=`echo "$@" | sed 's/.*-s \([0-9]*\).*/\1/'`
-			[[ "$SIZE" == "$@" ]] && err "Must specify number of pixels"
+		"-s"|"--size")
+			SIZE="$2"
+			if [[ -z `echo "$SIZE" | sed -e "s#[0-9]##g"` ]]; then
+                shift 2
+            else
+                err "Wrong argument! Use either 'half' or a number of pixels"
+            fi
 			;;
 		""|"-h"|"--help")
 			usage
 			exit 0;
 			;;
+        --)
+            shift
+            break
+            ;;
 		*)
+            err "Internal error!"
 			;;
 	esac
 done
 
 # Find current window mode
-WINDOW_STATUS=`bspc query -T -w | awk '/^.* [a-zA-Z\-]{8} \*$/{print $8}'`
+WINDOW_STATUS=`bspc query -T -n | awk '/^.* [a-zA-Z\-]{8} \*$/{print $8}'`
 FLAGS=`echo "$WINDOW_STATUS" | sed 's/-//g'`
 
 if [[ "$FLAGS" =~ ^.*f.*$ ]]; then
@@ -73,7 +93,8 @@ elif [[ "$FLAGS" =~ ^.*d.*$ ]]; then
 	xdo resize ${switch} ${sign}${SIZE}
 else
 # The window is tiled, modify the split ratio
-	$HORIZONTAL && switch=("left" "right") || switch=("down" "up")
+	$HORIZONTAL && switch=("left" "right") || switch=("bottom" "down")
 	$POSITIVE && sign="+" || sign="-"
-	bspc window -e ${switch[0]} ${sign}${SIZE} ||  bspc window -e ${switch[1]} ${sign}${SIZE}
+    $HORIZONTAL && move="${sign}${SIZE} 0" || move="0 ${sign}${SIZE}"
+	bspc node -z ${switch[0]} ${move} ||  bspc node -z ${switch[1]} ${move}
 fi

@@ -32,6 +32,7 @@ COLOR_BACKGROUND_BRIGHT="34322E"
 COLOR_FOREGROUND="A3A6AB"
 
 # Panel variables:
+PANEL_WM_NAME="bspwm_panel"
 PANEL_FONT_ONE="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-iso10646-1"
 PANEL_FONT_ONE_PANGO="Terminus 12"
 PANEL_FONT_TWO="-misc-stlarch-medium-r-normal-*-10-*-*-*-c-*-iso10646-*"

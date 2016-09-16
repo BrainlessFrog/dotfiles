@@ -27,21 +27,22 @@ setColors() {
     bspc config active_border_color "$defaultColor"
     bspc config normal_border_color "$normalColor"
 
-    bspc config presel_border_color "$preselColor"
+    #bspc config presel_border_color "$preselColor"
+    bspc config presel_feedback_color "$preselColor"
 
-    bspc config focused_locked_border_color "$lockedColor"
-    bspc config active_locked_border_color "$lockedColor"
-    bspc config normal_locked_border_color "$normalColor"
+    #bspc config focused_locked_border_color "$lockedColor"
+    #bspc config active_locked_border_color "$lockedColor"
+    #bspc config normal_locked_border_color "$normalColor"
 
-    bspc config focused_sticky_border_color "$stickyColor"
-    bspc config active_sticky_border_color "$stickyColor"
-    bspc config normal_sticky_border_color "$normalColor"
+    #bspc config focused_sticky_border_color "$stickyColor"
+    #bspc config active_sticky_border_color "$stickyColor"
+    #bspc config normal_sticky_border_color "$normalColor"
 
-    bspc config focused_private_border_color "$privateColor"
-    bspc config active_private_border_color "$privateColor"
-    bspc config normal_private_border_color "$normalColor"
+    #bspc config focused_private_border_color "$privateColor"
+    #bspc config active_private_border_color "$privateColor"
+    #bspc config normal_private_border_color "$normalColor"
 
-    bspc config urgent_border_color "$urgentColor"
+    #bspc config urgent_border_color "$urgentColor"
 }
 
 setConfig() {
@@ -51,13 +52,13 @@ setConfig() {
     bspc config split_ratio           0.50
     bspc config borderless_monocle    true
     bspc config gapless_monocle       true
+    bspc config paddingless_monocle   false
+    bspc config single_monocle        false
     bspc config focus_by_distance     true
-    #bspc config pointer_follows_focus true
+    bspc config pointer_follows_focus false
     bspc config focus_follows_pointer true
     bspc config initial_polarity      second_child
     bspc config center_pseudo_tiled   true
-    bspc config auto_cancel           true
-    #bspc config auto_alternate        true
     bspc config ignore_ewmh_focus     true
 
     # Monitor
@@ -66,18 +67,18 @@ setConfig() {
     # Rules
     bspc config external_rules_command $HOME/.config/bspwm/external_rules
     # Desktops
-    bspc rule -a csgo_linux desktop=^5 floating=true follow=true focus=true
+    bspc rule -a csgo_linux desktop=^5 state=floating follow=true focus=true
     bspc rule -a jd-Main desktop=^7 pseudo_tiled=true
     bspc rule -a JDownloader desktop=^7
-    bspc rule -a Gimp desktop=^9 floating=true
+    bspc rule -a Gimp desktop=^9 state=floating
     # Floating
-    bspc rule -a vlc floating=true center=true
-    bspc rule -a file-roller floating=true center=true
-    bspc rule -a nitrogen floating=true center=true
-    bspc rule -a gcolor2 floating=true center=true
-    bspc rule -a lxappearance floating=true center=true
-    bspc rule -a nvidia-settings floating=true center=true
-    bspc rule -a pavucontrol floating=true center=true
+    bspc rule -a vlc state=floating center=true
+    bspc rule -a file-roller state=floating center=true
+    bspc rule -a nitrogen state=floating center=true
+    bspc rule -a gcolor2 state=floating center=true
+    bspc rule -a lxappearance state=floating center=true
+    bspc rule -a nvidia-settings state=floating center=true
+    bspc rule -a pavucontrol state=floating center=true
 }
 
 setAutostart() {

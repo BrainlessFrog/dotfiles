@@ -87,18 +87,18 @@ while true; do
 done > "$PANEL_FIFO" &
 
 # Workspace
-bspc control --subscribe > "$PANEL_FIFO" &
+bspc subscribe report > "$PANEL_FIFO" &
 
 # Calling Bar
-# Part after bar is required for clickable areas
-cat "$PANEL_FIFO" | panel_bar | lemonbar -p \
+panel_bar < "$PANEL_FIFO" | lemonbar -p \
+    -n "$PANEL_WM_NAME" \
     -u "2" \
     -g x"$PANEL_HEIGHT" \
     -f "$PANEL_FONT_ONE" \
     -f "$PANEL_FONT_TWO" \
     -F "#FF${COLOR_FOREGROUND}" \
     -B "#FF${COLOR_BACKGROUND_DARK}" \
-    | while read line; do eval "$line"; done &
+    | bash &
 
 stalonetray \
     -bg "#${COLOR_BACKGROUND_DARK}" \
@@ -116,5 +116,15 @@ dunst \
     -to "10" \
     -geometry "250"x"$((5*PANEL_HEIGHT))"-"0"+"$PANEL_HEIGHT" \
     > /dev/null 2>&1 &
+
+# Keep panel below fullscreen windows
+wid=`xdo id -a "$PANEL_WM_NAME"`
+tries_left=20
+while [[ -z "$wid" -a "$tries_left" -gt 0 ]]; do
+    sleep 0.05
+    wid=`xdo id -a "$PANEL_WM_NAME"`
+    tries_left=$((tries_left - 1))
+done
+[[ -n "$wid" ]] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
 
 wait

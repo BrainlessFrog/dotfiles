@@ -3,23 +3,21 @@
 
 # Close/Kill window
 super + {_,shift + }w
-    bspc window -{c,k}
+    bspc node -{c,k}
 
 # Toggle last focused Window/Desktop back and forth
 super + {_,shift + }a
-    bspc {desktop,window} -f last
+    bspc {desktop,node} -f last
 
 # Swap selected window with the biggest/last window
 super + {_,shift +}m
-    bspc window -s {biggest,last}
-
-# Focus window to left/down/up/right
-super + {h,j,k,l}
-    bspc window -f {left,down,up,right}
+    bspc node -s {biggest,last}
 
 # Cancel one/all cut(s)
-super + {_,shift + }z
-    bspc {window -p cancel,desktop -c}
+super + z
+    bspc node -p cancel
+super + shift + z
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 # Focus the given desktop: adaptated for BE-azerty laptop
 super + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
@@ -27,19 +25,19 @@ super + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,cc
 
 # Move a window to the given desktop and keep focus: adaptated for BE-azerty laptop
 super + {1-9,0}
-    bspc window -d ^{1-9,10} -f
+    bspc node -d ^{1-9,10} -f
 
 # Move a window to the given desktop without keeping focus: adaptated for BE-azerty laptop
 super + alt + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla,agrave}
-    bspc window -d ^{1-9,10}
+    bspc node -d ^{1-9,10}
 
 # Set window split ratio of the preselection: adapted for BE-azerty laptop
 super + ctrl + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla}
-    bspc window -r 0.{1-9}
+    bspc node -o 0.{1-9}
 
 # Set window split ratio between two existing windows: adapted for BE-azerty laptop
 super + ctrl + alt + {ampersand,eacute,quotedbl,apostrophe,parenleft,section,egrave,exclam,ccedilla}
-    bspc config -w focused split_ratio 0.{1-9} && bspc desktop -E
+    bspc config -w focused split_ratio 0.{1-9} && bspc node -E
 
 # Other keybinds :
 #======================================================================

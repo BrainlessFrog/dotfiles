@@ -132,9 +132,18 @@ set autoindent
 set smartindent
 
 " Folding
-set foldenable
+set nofoldenable
 set foldmethod=indent
 set foldlevel=0
+"Toggle fold
+function! ToggleFold()
+    if &foldenable
+        set nofoldenable
+    else
+        set foldenable
+    end
+endfunction
+noremap <Leader>z :call ToggleFold()<cr>
 
 " Spell
 "setlocal spell spelllang=fr,en

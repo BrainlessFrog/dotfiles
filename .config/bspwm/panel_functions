@@ -24,13 +24,13 @@ getBattery() {
         echo "%{F$batteryColor}\uE041 %{F-}$level%%"
     else
         if [[ "$level" -lt 10 ]]; then
-            echo "%{F$batteryColor}\uE038 %{F-}$level%%"
+            echo "%{F$batteryColor}\uE038 %{F-}$level%"
         elif [[ "$level" -lt 41 ]]; then
-            echo "%{F$batteryColor}\uE039 %{F-}$level%%"
+            echo "%{F$batteryColor}\uE039 %{F-}$level%"
         elif [[ "$level" -lt 71 ]]; then
-            echo "%{F$batteryColor}\uE03A %{F-}$level%%"
+            echo "%{F$batteryColor}\uE03A %{F-}$level%"
         else
-            echo "%{F$batteryColor}\uE03B %{F-}$level%%"
+            echo "%{F$batteryColor}\uE03B %{F-}$level%"
         fi
     fi
 }
@@ -50,7 +50,7 @@ getHidden() {
     local comStart='%{A1:notify-send -t 10 "$(window_hide.sh list -n)":}%{A3:window_hide.sh dmenu -i -r -h "$PANEL_HEIGHT" -y "$PANEL_HEIGHT" -w "250" -q -l "5" -p "> " -fn "$PANEL_FONT_ONE" -nb "#$COLOR_BACKGROUND_DARK" -nf "#$COLOR_FOREGROUND" -sb "#$COLOR_BACKGROUND_BRIGHT" -sf "#$COLOR_TERM_BLUE_DARK":}'
     local comStop="%{A}%{A}"
 
-    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}%{T2}\uE0B1%{T} %{F-}${hiddenNumber}${comStop}"
+    echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}%{T2}\uE0B1%{T-} %{F-}${hiddenNumber}${comStop}"
 }
 
 # Moc
@@ -237,11 +237,11 @@ getVolume() {
     # Return
     if [[ "$volStatus" == "on" ]] || [[ "$volStatus" == "no" ]]; then
         if [[ "$volLevel" -lt 11 ]];then
-            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE051 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE051 %{F-}$volLevel%${comStop}"
         elif [[ "$volLevel" -lt 51 ]]; then
-            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE053 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE053 %{F-}$volLevel%${comStop}"
         else
-            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE152 %{F-}$volLevel%%${comStop}"
+            echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE152 %{F-}$volLevel%${comStop}"
         fi
     else
         echo "${comStart}%{F#FF${COLOR_TERM_WHITE_DARK}}\uE052 %{F-}Mute${comStop}"

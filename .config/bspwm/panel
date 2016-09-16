@@ -93,6 +93,7 @@ bspc subscribe report > "$PANEL_FIFO" &
 panel_bar < "$PANEL_FIFO" | lemonbar -p \
     -n "$PANEL_WM_NAME" \
     -u "2" \
+    -a "100" \
     -g x"$PANEL_HEIGHT" \
     -f "$PANEL_FONT_ONE" \
     -f "$PANEL_FONT_TWO" \
@@ -120,11 +121,11 @@ dunst \
 # Keep panel below fullscreen windows
 wid=`xdo id -a "$PANEL_WM_NAME"`
 tries_left=20
-while [[ -z "$wid" -a "$tries_left" -gt 0 ]]; do
+while [ -z "$wid" -a "$tries_left" -gt 0 ]; do
     sleep 0.05
     wid=`xdo id -a "$PANEL_WM_NAME"`
     tries_left=$((tries_left - 1))
 done
-[[ -n "$wid" ]] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+[ -n "$wid" ] && xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
 
 wait

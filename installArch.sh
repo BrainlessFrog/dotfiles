@@ -16,7 +16,7 @@ xorg="xorg-server xorg-server-utils xorg-apps xorg-xinit"
 nvidia="nvidia nvidia-libgl lib32-nvidia-libgl"
 pulseaudio="alsa-utils pulseaudio pavucontrol lib32-alsa-plugins paprefs pulseaudio-alsa lib32-libpulse"
 
-bspwm="bspwm-git sxhkd-git xdo-git lemonbar terminus stlarch_font compton-git dunst stalonetray conky-lua-nv rxvt-unicode dmenu2-hg lm_sensors hddtemp glipper numlockx"
+bspwm="bspwm-git sxhkd-git xdo-git lemonbar-git terminus stlarch_font compton-git dunst stalonetray conky-lua-nv rxvt-unicode dmenu2-hg lm_sensors hddtemp glipper numlockx"
 #lxappearance="lxappearance qtconfiguration awoken-icons gtk-theme-flatstudio xscreensaver-arch-logo nitrogen xcursor-vanilla-dmz"
 lxappearance="lxappearance qtconfiguration awoken-icons gtk-theme-arc xscreensaver-arch-logo nitrogen xcursor-vanilla-dmz"
 fonts="ttf-dejavu powerline-fonts-git ttf-droid"

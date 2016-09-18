@@ -222,3 +222,33 @@ super + Escape
 # Quit Bspwm
 super + alt + Escape
     killall panel && bspc quit
+
+# Laptop keybinds
+#======================================================================
+
+XF86AudioRaiseVolume
+    pactl set-sink-volume 0 -- +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume 0 -- -5%
+
+XF86AudioMute
+    pactl set-sink-mute 0 toggle
+
+#XF86AudioMedia
+#XF86AudioPlay
+#XF86AudioPause
+#XF86AudioStop
+#XF86AudioPrev
+#XF86AudioNext
+#XF86AudioEject
+#XF86AudioRewind
+#XF86AudioForward
+#XF86AudioRepeat
+#XF86AudioRandomPlay
+
+XF86MonBrightnessUp
+    xbacklight -inc 5%
+
+XF86MonBrightnessDown
+    xbacklight -dec 5%

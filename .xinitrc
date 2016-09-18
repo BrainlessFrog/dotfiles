@@ -21,8 +21,6 @@ export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 # Redefine PATH
 export PATH="$PATH:$HOME/.scripts:$HOME/.config/bspwm"
 
-[[ `echo "$HOSTNAME" | grep "desktop"` ]] && DESKTOP=true || DESKTOP=false
-
 # Fonts
 setDesktopFonts() {
     xset +fp /usr/share/fonts/local
@@ -87,8 +85,6 @@ xsetroot -cursor_name left_ptr
 #start-pulseaudio-x11 &
 
 numlockx on &
-$DESKTOP && sxhkdConfig="$HOME/.config/sxhkd/desktop.sxhkdrc" || sxhkdConfig="$HOME/.config/sxhkd/laptop.sxhkdrc"
-#sxhkd -c "$HOME/.config/sxhkd/base.sxhkdrc" "$sxhkdConfig" &
 sxhkd -c "$HOME/.config/sxhkd/base.sxhkdrc" &
 urxvtd &
 

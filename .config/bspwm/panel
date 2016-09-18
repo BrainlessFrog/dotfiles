@@ -70,7 +70,7 @@ done > "$PANEL_FIFO" &
 
 # Update
 while true; do
-    $DESKTOP && echo "UPDATE$(getUpdates -a)" || echo "UPDATE$(getUpdates -d)"
+    echo "UPDATE$(getUpdates -a)"
     sleep 3600;
 done > "$PANEL_FIFO" &
 
@@ -82,7 +82,7 @@ done > "$PANEL_FIFO" &
 
 # Volume
 while true; do
-    $DESKTOP && echo "VOL$(getVolume -p 1 en)" || echo "VOL$(getVolume -p 0 fr)"
+    $DESKTOP && echo "VOL$(getVolume -p 1 en)" || echo "VOL$(getVolume -p 0 en)"
     sleep 1;
 done > "$PANEL_FIFO" &
 

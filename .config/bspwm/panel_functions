@@ -21,7 +21,7 @@ getBattery() {
     fi
 
     if [[ "$status" == "Charging" ]]; then
-        echo "%{F$batteryColor}\uE041 %{F-}$level%%"
+        echo "%{F$batteryColor}\uE041 %{F-}$level%"
     else
         if [[ "$level" -lt 10 ]]; then
             echo "%{F$batteryColor}\uE038 %{F-}$level%"

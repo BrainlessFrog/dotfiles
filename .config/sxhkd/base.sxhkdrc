@@ -2,8 +2,44 @@
 #======================================================================
 
 # Close/Kill window
+super + {_,shift + }z
+    bspc node -{c,k}
 alt + F4
     bspc node -c
+
+# Toggle last focused Window/Desktop back and forth: adapted to pseudo-qwerty
+super + {_,shift + }q
+    bspc {desktop,node} -f last
+
+# Swap selected window with the biggest/last window
+super + {_,shift +}comma
+    bspc node -s {biggest,last}
+
+# Cancel one/all cut(s)
+super + w
+    bspc node -p cancel
+super + shift + w
+    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# Focus the given desktop
+super + {1-9,0}
+    bspc desktop -f ^{1-9,10}
+
+# Move a window to the given desktop and keep focus
+super + shift + {1-9,0}
+    bspc node -d ^{1-9,10} -f
+
+# Move a window to the given desktop without keeping focus
+super + alt + {1-9,0}
+    bspc node -d ^{1-9,10}
+
+# Set window split ratio of the preselection
+super + ctrl + {1-9,0}
+    bspc node -o 0.{1-9}
+
+# Set window split ratio between two existing windows
+super + ctrl + alt + {1-9,0}
+    bspc config -w focused split_ratio 0.{1-9} && bspc node -E
 
 # Toggle Monocle
 super + t
